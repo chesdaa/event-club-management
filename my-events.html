@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Events - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Campus Events</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="events.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Events</span>
+            </a>
+            <a href="my-events.html" class="nav-item active">
+                <i class="fas fa-ticket-alt"></i>
+                <span>My Events</span>
+            </a>
+            <a href="clubs.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Clubs</span>
+            </a>
+            <a href="calendar.html" class="nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <h2>My Events</h2>
+            <div class="top-bar-actions">
+                <button class="btn btn-primary" onclick="window.location.href='events.html'">
+                    <i class="fas fa-search"></i> Browse Events
+                </button>
+            </div>
+        </header>
+
+        <!-- My Events Content -->
+        <div class="dashboard-content">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchEventTab('upcoming')">Upcoming</button>
+                <button class="tab-btn" onclick="switchEventTab('past')">Past Events</button>
+                <button class="tab-btn" onclick="switchEventTab('all')">All Events</button>
+            </div>
+
+            <!-- Events List -->
+            <div id="myEventsList" class="events-list">
+                <!-- Events will be loaded dynamically -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" style="display: none; text-align: center; padding: 3rem;">
+                <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                <h3>No Events Yet</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">You haven't registered for any events.</p>
+                <button class="btn btn-primary" onclick="window.location.href='events.html'">
+                    <i class="fas fa-search"></i> Browse Events
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/my-events.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Campus Events</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="events.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Events</span>
+            </a>
+            <a href="my-events.html" class="nav-item">
+                <i class="fas fa-ticket-alt"></i>
+                <span>My Events</span>
+            </a>
+            <a href="clubs.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Clubs</span>
+            </a>
+            <a href="proposals.html" class="nav-item organizer-only">
+                <i class="fas fa-file-alt"></i>
+                <span>Proposals</span>
+            </a>
+            <a href="calendar.html" class="nav-item">
+                <i class="fas fa-calendar"></i>
+                <span>Calendar</span>
+            </a>
+            <a href="gallery.html" class="nav-item">
+                <i class="fas fa-images"></i>
+                <span>Gallery</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+                <span class="badge" id="notifBadge">3</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search events, clubs...">
+            </div>
+            <div class="top-bar-actions">
+                <button class="icon-btn" onclick="window.location.href='notifications.html'">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=667eea&color=fff" alt="User" class="user-avatar">
+                    <span id="userName">John Doe</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Welcome back, <span id="userNameGreeting">John</span>! 👋</h1>
+                <button class="btn btn-primary organizer-only" onclick="window.location.href='create-event.html'">
+                    <i class="fas fa-plus"></i> Create Event
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card-dash">
+                    <div class="stat-icon bg-blue">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="myEventsCount">0</h3>
+                        <p>My Events</p>
+                    </div>
+                </div>
+                <div class="stat-card-dash">
+                    <div class="stat-icon bg-purple">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="myClubsCount">0</h3>
+                        <p>My Clubs</p>
+                    </div>
+                </div>
+                <div class="stat-card-dash organizer-only">
+                    <div class="stat-icon bg-green">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalAttendees">0</h3>
+                        <p>Total Attendees</p>
+                    </div>
+                </div>
+                <div class="stat-card-dash">
+                    <div class="stat-icon bg-orange">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="upcomingCount">0</h3>
+                        <p>Upcoming</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="actions-grid">
+                    <button class="action-card" onclick="window.location.href='events.html'">
+                        <i class="fas fa-search"></i>
+                        <span>Browse Events</span>
+                    </button>
+                    <button class="action-card organizer-only" onclick="window.location.href='create-event.html'">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Create Event</span>
+                    </button>
+                    <button class="action-card" onclick="window.location.href='clubs.html'">
+                        <i class="fas fa-users"></i>
+                        <span>Join Club</span>
+                    </button>
+                    <button class="action-card organizer-only" onclick="window.location.href='proposals.html'">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Submit Proposal</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <a href="events.html">View All</a>
+                </div>
+                <div class="events-list" id="upcomingEventsList">
+                    <!-- Events will be loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- My Clubs -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>My Clubs</h2>
+                    <a href="clubs.html">View All</a>
+                </div>
+                <div class="clubs-grid-dash" id="myClubsList">
+                    <!-- Clubs will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

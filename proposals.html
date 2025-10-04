@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposals - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Campus Events</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="events.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Events</span>
+            </a>
+            <a href="clubs.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Clubs</span>
+            </a>
+            <a href="proposals.html" class="nav-item active">
+                <i class="fas fa-file-alt"></i>
+                <span>Proposals</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="top-bar">
+            <h2>Proposals</h2>
+            <div class="top-bar-actions">
+                <button class="btn btn-primary" onclick="openProposalModal('event')">
+                    <i class="fas fa-plus"></i> New Event Proposal
+                </button>
+                <button class="btn btn-outline" onclick="openProposalModal('club')">
+                    <i class="fas fa-plus"></i> New Club Proposal
+                </button>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('all')">All Proposals</button>
+                <button class="tab-btn" onclick="switchTab('pending')">Pending</button>
+                <button class="tab-btn" onclick="switchTab('approved')">Approved</button>
+                <button class="tab-btn" onclick="switchTab('rejected')">Rejected</button>
+            </div>
+
+            <!-- Proposals List -->
+            <div class="proposals-list" id="proposalsList">
+                <!-- Proposals will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Proposal Modal -->
+    <div id="eventProposalModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-plus"></i> Event Proposal</h2>
+                <span class="close" onclick="closeProposalModal('event')">&times;</span>
+            </div>
+            <form id="eventProposalForm" class="proposal-form">
+                <div class="form-section">
+                    <h3>Event Details</h3>
+                    <div class="form-group">
+                        <label for="eventProposalTitle">Event Title *</label>
+                        <input type="text" id="eventProposalTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventProposalDesc">Description *</label>
+                        <textarea id="eventProposalDesc" rows="4" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventProposalDate">Proposed Date *</label>
+                            <input type="date" id="eventProposalDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventProposalVenue">Venue *</label>
+                            <input type="text" id="eventProposalVenue" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventProposalParticipants">Expected Participants *</label>
+                        <input type="number" id="eventProposalParticipants" min="1" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Budget Planning <button type="button" class="btn-icon-small" onclick="openAIAdvisor('budget')" title="Get AI Help">
+                        <i class="fas fa-robot"></i>
+                    </button></h3>
+                    <div id="budgetItems">
+                        <div class="budget-item">
+                            <input type="text" placeholder="Item (e.g., Venue)" class="budget-item-name">
+                            <input type="number" placeholder="Amount" class="budget-item-amount" min="0">
+                            <button type="button" class="btn-icon" onclick="removeBudgetItem(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="addBudgetItem()">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                    <div class="budget-total">
+                        <strong>Total Budget: $<span id="totalBudget">0</span></strong>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Required Documents <button type="button" class="btn-icon-small" onclick="openAIAdvisor('documents')" title="Get AI Suggestions">
+                        <i class="fas fa-robot"></i>
+                    </button></h3>
+                    <div class="form-group">
+                        <label>Upload Supporting Documents</label>
+                        <input type="file" multiple accept=".pdf,.doc,.docx">
+                        <small>Permission letters, sponsorship agreements, etc.</small>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeProposalModal('event')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Proposal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Club Proposal Modal -->
+    <div id="clubProposalModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i class="fas fa-users"></i> Club Proposal</h2>
+                <span class="close" onclick="closeProposalModal('club')">&times;</span>
+            </div>
+            <form id="clubProposalForm" class="proposal-form">
+                <div class="form-section">
+                    <h3>Club Information</h3>
+                    <div class="form-group">
+                        <label for="clubProposalName">Club Name *</label>
+                        <input type="text" id="clubProposalName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubProposalMission">Mission & Goals *</label>
+                        <textarea id="clubProposalMission" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubProposalFaculty">Faculty/Department *</label>
+                        <select id="clubProposalFaculty" required>
+                            <option value="">Select Faculty</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="science">Science</option>
+                            <option value="arts">Arts</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Founding Members (Min. 5)</h3>
+                    <div id="foundingMembers">
+                        <div class="member-item">
+                            <input type="text" placeholder="Name" class="member-name">
+                            <input type="text" placeholder="Student ID" class="member-id">
+                            <input type="email" placeholder="Email" class="member-email">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="addMember()">
+                        <i class="fas fa-plus"></i> Add Member
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h3>Annual Budget <button type="button" class="btn-icon-small" onclick="openAIAdvisor('club-budget')" title="Get AI Help">
+                        <i class="fas fa-robot"></i>
+                    </button></h3>
+                    <div class="form-group">
+                        <label for="clubBudget">Estimated Annual Budget *</label>
+                        <input type="number" id="clubBudget" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubBudgetJustification">Budget Justification *</label>
+                        <textarea id="clubBudgetJustification" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeProposalModal('club')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Proposal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AI Advisor Modal -->
+    <div id="aiAdvisorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-robot"></i> AI Advisor</h2>
+                <span class="close" onclick="closeAIAdvisor()">&times;</span>
+            </div>
+            <div class="ai-chat">
+                <div class="ai-messages" id="aiMessages">
+                    <div class="ai-message bot">
+                        <i class="fas fa-robot"></i>
+                        <div class="message-content">
+                            <p>Hello! I'm your AI advisor. I can help you with:</p>
+                            <ul>
+                                <li>Budget planning and breakdown</li>
+                                <li>Document requirements</li>
+                                <li>Proposal improvements</li>
+                                <li>Best practices</li>
+                            </ul>
+                            <p>What would you like help with?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-input-area">
+                    <input type="text" id="aiInput" placeholder="Ask me anything...">
+                    <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/proposals.js"></script>
+</body>
+</html>

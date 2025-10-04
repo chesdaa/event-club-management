@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Campus Events</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="events.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Events</span>
+            </a>
+            <a href="clubs.html" class="nav-item active">
+                <i class="fas fa-users"></i>
+                <span>Clubs</span>
+            </a>
+            <a href="proposals.html" class="nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>Proposals</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchClubs" placeholder="Search clubs...">
+            </div>
+            <button class="btn btn-primary" onclick="window.location.href='proposals.html'">
+                <i class="fas fa-plus"></i> Propose New Club
+            </button>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="page-header">
+                <h1>Campus Clubs</h1>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Category:</label>
+                    <select id="clubCategoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="academic">Academic</option>
+                        <option value="sports">Sports</option>
+                        <option value="arts">Arts & Culture</option>
+                        <option value="technology">Technology</option>
+                        <option value="social">Social Service</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Faculty:</label>
+                    <select id="facultyFilter">
+                        <option value="all">All Faculties</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="science">Science</option>
+                        <option value="arts">Arts</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Clubs Grid -->
+            <div class="clubs-grid-full" id="clubsGrid">
+                <!-- Clubs will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Club Detail Modal -->
+    <div id="clubModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close">&times;</span>
+            <div id="clubDetailContent">
+                <!-- Club details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/clubs.js"></script>
+</body>
+</html>
