@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+    <div class="main-content">
+        <header class="top-bar">
+            <h2>System Administration</h2>
+            <div class="top-bar-actions">
+                <button class="btn btn-outline" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff" alt="User" class="user-avatar">
+                    <span>Admin</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <!-- Admin Actions -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tools"></i> Quick Actions</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <button class="btn btn-primary" onclick="openCreateEventModal()">
+                        <i class="fas fa-plus"></i> Create Event
+                    </button>
+                    <button class="btn btn-primary" onclick="openCreateClubModal()">
+                        <i class="fas fa-plus"></i> Create Club
+                    </button>
+                    <button class="btn btn-primary" onclick="openNotifyUsersModal()">
+                        <i class="fas fa-bell"></i> Notify Users
+                    </button>
+                    <button class="btn btn-outline" onclick="openSystemSettings()">
+                        <i class="fas fa-cog"></i> System Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pending Event Proposals -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-check"></i> Pending Event Proposals</h2>
+                </div>
+                <div id="pendingEventProposals">
+                    <!-- Filled by admin.js -->
+                </div>
+            </div>
+
+            <!-- Pending Club Proposals -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-check-circle"></i> Pending Club Proposals</h2>
+                </div>
+                <div id="pendingProposals">
+                    <!-- Filled by admin.js -->
+                </div>
+            </div>
+
+            <!-- Events Overview -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-alt"></i> All Events</h2>
+                    <button class="btn btn-outline btn-sm" onclick="toggleSection('allEventsList')">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="text" id="searchEvents" placeholder="Search events..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterEvents()">
+                </div>
+                <div id="allEventsList" class="events-list"></div>
+                <div id="eventsPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
+            </div>
+
+            <!-- Clubs Overview -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> All Clubs</h2>
+                    <button class="btn btn-outline btn-sm" onclick="toggleSection('allClubsList')">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="text" id="searchClubs" placeholder="Search clubs..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterClubs()">
+                </div>
+                <div id="allClubsList" class="clubs-grid-dash"></div>
+                <div id="clubsPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
+            </div>
+
+            <!-- Users Overview -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-shield"></i> Users Management</h2>
+                    <button class="btn btn-outline btn-sm" onclick="toggleSection('allUsersList')">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="text" id="searchUsers" placeholder="Search users..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterUsers()">
+                </div>
+                <div id="allUsersList" class="events-list"></div>
+                <div id="usersPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/legal-pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Campus Events</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="clubs.html">Clubs</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="legal-hero">
+        <h1><i class="fas fa-shield-alt"></i> Privacy Policy</h1>
+        <p>Last updated: January 2025</p>
+    </div>
+
+    <!-- Quick Summary -->
+    <div class="container">
+        <div class="legal-summary">
+            <h2>Privacy at a Glance</h2>
+            <p>We care about your privacy. Here's what you need to know:</p>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>We Protect Your Data</h3>
+                    <p>Your information is encrypted and securely stored</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>You're in Control</h3>
+                    <p>Access, update, or delete your data anytime</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-ban"></i>
+                    <h3>No Selling Data</h3>
+                    <p>We never sell your personal information</p>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Transparent</h3>
+                    <p>Clear about what we collect and why</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion Content -->
+        <div class="legal-accordion" style="padding: 2rem 0;">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="accordion-title">
+                        <h3>What Information We Collect</h3>
+                        <p>The data we gather to provide you with our services</p>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>We collect information that you provide directly to us:</p>
+                        <ul>
+                            <li><strong>Account Information:</strong> Name, email, student ID, faculty, year</li>
+                            <li><strong>Profile Data:</strong> Interests, club memberships, event registrations</li>
+                            <li><strong>Usage Data:</strong> How you interact with our platform</li>
+                            <li><strong>Technical Data:</strong> IP address, browser type, device information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="accordion-title">
+                        <h3>How We Use Your Information</h3>
+                        <p>Why we need your data and what we do with it</p>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>We use your information to:</p>
+                        <ul>
+                            <li>Create and manage your account</li>
+                            <li>Process event registrations and club memberships</li>
+                            <li>Send you notifications about events and activities</li>
+                            <li>Improve our platform and user experience</li>
+                            <li>Provide customer support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="accordion-title">
+                        <h3>How We Protect Your Data</h3>
+                        <p>Security measures we have in place</p>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>We implement industry-standard security measures:</p>
+                        <ul>
+                            <li>Encrypted data transmission (HTTPS)</li>
+                            <li>Secure password storage with hashing</li>
+                            <li>Regular security audits and updates</li>
+                            <li>Limited access to personal data</li>
+                            <li>Secure servers and databases</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon"><i class="fas fa-user-check"></i></div>
+                    <div class="accordion-title">
+                        <h3>Your Rights & Control</h3>
+                        <p>What you can do with your data</p>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>You have the right to:</p>
+                        <ul>
+                            <li><strong>Access:</strong> Request a copy of your personal data</li>
+                            <li><strong>Correct:</strong> Update incorrect or incomplete information</li>
+                            <li><strong>Delete:</strong> Request deletion of your account and data</li>
+                            <li><strong>Export:</strong> Download your data in a portable format</li>
+                            <li><strong>Opt-out:</strong> Unsubscribe from marketing communications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-icon"><i class="fas fa-cookie-bite"></i></div>
+                    <div class="accordion-title">
+                        <h3>Cookies & Tracking</h3>
+                        <p>How we use cookies on our website</p>
+                    </div>
+                    <i class="fas fa-chevron-down accordion-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <p>We use cookies to improve your experience. You can control cookies through your browser settings.</p>
+                        <ul>
+                            <li><strong>Essential Cookies:</strong> Required for the website to function</li>
+                            <li><strong>Preference Cookies:</strong> Remember your settings and choices</li>
+                            <li><strong>Analytics Cookies:</strong> Help us understand how you use our site</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="legal-cta">
+            <h2>Questions About Your Privacy?</h2>
+            <p>Our team is here to help you understand how we protect your data</p>
+            <a href="contact.html" class="btn">Contact Privacy Team</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Campus Events</h3>
+                    <p>Your one-stop platform for campus activities and club management.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script>
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Campus Events</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="clubs.html">Clubs</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Section -->
+    <section class="gallery-page" style="padding: calc(4rem + 60px) 2rem 4rem;">
+        <div class="container">
+            <div class="page-header">
+                <h1>Event Gallery</h1>
+            </div>
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Filter by:</label>
+                    <select id="galleryFilter">
+                        <option value="recent">Recent</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Club:</label>
+                    <select id="clubFilterGallery">
+                        <option value="all">All Clubs</option>
+                        <option value="tech">Tech Club</option>
+                        <option value="music">Music Society</option>
+                        <option value="sports">Sports Club</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Gallery Albums -->
+            <div class="gallery-albums" id="galleryAlbums">
+                <!-- Albums will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Viewer Modal -->
+    <div id="photoViewerModal" class="modal">
+        <div class="modal-content modal-fullscreen">
+            <span class="close" onclick="closePhotoViewer()">&times;</span>
+            <button class="nav-btn prev-btn" onclick="previousPhoto()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="photo-viewer-content">
+                <img id="viewerImage" src="" alt="Event Photo">
+                <div class="photo-info">
+                    <h3 id="photoTitle"></h3>
+                    <p id="photoDescription"></p>
+                </div>
+            </div>
+            <button class="nav-btn next-btn" onclick="nextPhoto()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-upload"></i> Upload Event Photos</h2>
+                <span class="close" onclick="closeUploadModal()">&times;</span>
+            </div>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="uploadEvent">Select Event *</label>
+                    <select id="uploadEvent" required>
+                        <option value="">Choose an event</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Upload Photos *</label>
+                    <div class="file-upload-area">
+                        <i class="fas fa-images"></i>
+                        <p>Drag & drop photos here or click to browse</p>
+                        <input type="file" id="photoFiles" multiple accept="image/*" hidden>
+                        <button type="button" class="btn btn-outline" onclick="document.getElementById('photoFiles').click()">
+                            Choose Files
+                        </button>
+                    </div>
+                    <div id="uploadPreview" class="upload-preview"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeUploadModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Campus Events</h3>
+                    <p>Your one-stop platform for campus activities and club management.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>

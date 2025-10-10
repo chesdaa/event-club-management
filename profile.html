@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Campus Events</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Campus Events</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="clubs.html">Clubs</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="notifications.html" class="btn btn-outline"><i class="fas fa-bell"></i></a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="top-bar">
+      <div class="container">
+        <h2>My Profile</h2>
+      </div>
+    </header>
+
+    <div class="dashboard-content container">
+      <div class="page-header">
+        <h1>Account Information</h1>
+        <button class="btn btn-primary" id="saveProfileBtn"><i class="fas fa-save"></i> Save Changes</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Basic Info</h3>
+          <div class="form-row">
+            <div class="form-control">
+              <label>First Name</label>
+              <input id="pfFirstName" type="text" placeholder="First Name">
+            </div>
+            <div class="form-control">
+              <label>Last Name</label>
+              <input id="pfLastName" type="text" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-control">
+              <label>Email</label>
+              <input id="pfEmail" type="email" placeholder="Email" disabled>
+            </div>
+            <div class="form-control">
+              <label>Student ID</label>
+              <input id="pfStudentId" type="text" placeholder="Student ID">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-control">
+              <label>Faculty</label>
+              <input id="pfFaculty" type="text" placeholder="Faculty">
+            </div>
+            <div class="form-control">
+              <label>Year</label>
+              <input id="pfYear" type="number" min="1" max="8" placeholder="Year">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Preferences</h3>
+          <div class="form-row">
+            <div class="form-control">
+              <label>Notification Email</label>
+              <input id="pfNotifyEmail" type="email" placeholder="notification@campus.edu">
+            </div>
+            <div class="form-control">
+              <label>Notifications</label>
+              <select id="pfNotifyPref">
+                <option value="all">All updates</option>
+                <option value="important">Only important</option>
+                <option value="none">None</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-control">
+            <label>About Me</label>
+            <textarea id="pfAbout" rows="4" placeholder="Write something about yourself..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Security</h3>
+        <div class="form-row">
+          <div class="form-control">
+            <label>New Password</label>
+            <input id="pfNewPassword" type="password" placeholder="********">
+          </div>
+          <div class="form-control">
+            <label>Confirm Password</label>
+            <input id="pfConfirmPassword" type="password" placeholder="********">
+          </div>
+        </div>
+        <button class="btn btn-outline" id="changePasswordBtn"><i class="fas fa-key"></i> Change Password</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

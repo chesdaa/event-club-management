@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications - Campus Events</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Campus Events</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="clubs.html">Clubs</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="profile.html" class="btn btn-outline"><i class="fas fa-user"></i></a>
+      </div>
+      <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="top-bar">
+      <div class="container">
+        <h2>Notifications</h2>
+        <div>
+          <button class="btn btn-outline" id="markAllReadBtn"><i class="fas fa-check-double"></i> Mark all as read</button>
+          <button class="btn btn-outline" id="clearAllBtn"><i class="fas fa-trash"></i> Clear all</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content container">
+      <div id="notificationsList" class="notifications-list">
+        <!-- Notifications will render here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/notifications.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Campus Events</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="clubs.html">Clubs</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Campus Events</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="events.html" class="nav-item active">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Events</span>
+            </a>
+            <a href="my-events.html" class="nav-item">
+                <i class="fas fa-ticket-alt"></i>
+                <span>My Events</span>
+            </a>
+            <a href="clubs.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Clubs</span>
+            </a>
+            <a href="proposals.html" class="nav-item">
+                <i class="fas fa-file-alt"></i>
+                <span>Proposals</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <h2>Create New Event</h2>
+            <button class="btn btn-outline" onclick="window.location.href='events.html'">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+        </header>
+
+        <!-- Create Event Form -->
+        <div class="dashboard-content">
+            <div class="form-container">
+                <form id="createEventForm" class="event-form">
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title *</label>
+                            <input type="text" id="eventTitle" name="eventTitle" placeholder="Enter event title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDescription">Description *</label>
+                            <textarea id="eventDescription" name="eventDescription" rows="5" placeholder="Describe your event..." required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventCategory">Category *</label>
+                                <select id="eventCategory" name="eventCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="academic">Academic</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="music">Music</option>
+                                    <option value="arts">Arts & Culture</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="social">Social</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventClub">Organizing Club *</label>
+                                <select id="eventClub" name="eventClub" required>
+                                    <option value="">Select Club</option>
+                                    <option value="tech-club">Tech Club</option>
+                                    <option value="music-society">Music Society</option>
+                                    <option value="sports-club">Sports Club</option>
+                                    <option value="art-club">Art Club</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Date & Time</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventDate">Event Date *</label>
+                                <input type="date" id="eventDate" name="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventTime">Start Time *</label>
+                                <input type="time" id="eventTime" name="eventTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventEndTime">End Time *</label>
+                                <input type="time" id="eventEndTime" name="eventEndTime" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Location & Capacity</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="eventVenue">Venue *</label>
+                                <input type="text" id="eventVenue" name="eventVenue" placeholder="e.g., Main Auditorium" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCapacity">Capacity *</label>
+                                <input type="number" id="eventCapacity" name="eventCapacity" placeholder="Max participants" min="1" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Event Poster</h3>
+                        <div class="form-group">
+                            <label for="eventPoster">Upload Poster Image</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop your image here or click to browse</p>
+                                <input type="file" id="eventPoster" name="eventPoster" accept="image/*" hidden>
+                                <button type="button" class="btn btn-outline" onclick="document.getElementById('eventPoster').click()">
+                                    Choose File
+                                </button>
+                            </div>
+                            <div id="imagePreview" class="image-preview"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Additional Details</h3>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="requiresRegistration" checked>
+                                <span>Requires Registration</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="generateQR" checked>
+                                <span>Generate QR Code Tickets</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTags">Tags (comma separated)</label>
+                            <input type="text" id="eventTags" name="eventTags" placeholder="e.g., workshop, networking, free">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="saveDraft()">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i> Publish Event
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/create-event.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Campus Events</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Campus Events</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="clubs.html">Clubs</a></li>
+                <li><a href="calendar.html" class="active">Calendar</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Calendar Section -->
+    <section class="calendar-page" style="padding: calc(4rem + 60px) 2rem 4rem;">
+        <div class="container">
+            <div class="page-header" style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Event Calendar</h1>
+                <div class="calendar-controls">
+                    <button class="btn btn-outline" onclick="previousMonth()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="currentMonth">January 2025</span>
+                    <button class="btn btn-outline" onclick="nextMonth()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="btn btn-primary" onclick="goToToday()">Today</button>
+                </div>
+            </div>
+            <!-- View Toggle -->
+            <div class="view-toggle">
+                <button class="toggle-btn active" onclick="switchView('month')">Month</button>
+                <button class="toggle-btn" onclick="switchView('week')">Week</button>
+                <button class="toggle-btn" onclick="switchView('list')">List</button>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="monthView" class="calendar-view">
+                <div class="calendar-grid">
+                    <div class="calendar-header">
+                        <div class="calendar-day-name">Sun</div>
+                        <div class="calendar-day-name">Mon</div>
+                        <div class="calendar-day-name">Tue</div>
+                        <div class="calendar-day-name">Wed</div>
+                        <div class="calendar-day-name">Thu</div>
+                        <div class="calendar-day-name">Fri</div>
+                        <div class="calendar-day-name">Sat</div>
+                    </div>
+                    <div class="calendar-body" id="calendarBody">
+                        <!-- Calendar days will be generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week View -->
+            <div id="weekView" class="calendar-view" style="display: none;">
+                <div class="week-grid" id="weekGrid">
+                    <!-- Week view will be generated here -->
+                </div>
+            </div>
+
+            <!-- List View -->
+            <div id="listView" class="calendar-view" style="display: none;">
+                <div class="events-list-view" id="eventsListView">
+                    <!-- Events list will be generated here -->
+                </div>
+            </div>
+
+            <!-- Event Details Sidebar -->
+            <div class="event-details-sidebar" id="eventDetailsSidebar">
+                <div class="sidebar-header">
+                    <h3>Event Details</h3>
+                    <button class="close-btn" onclick="closeEventDetails()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="eventDetailsContent">
+                    <p class="no-event-selected">Select an event to view details</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Campus Events</h3>
+                    <p>Your one-stop platform for campus activities and club management.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="clubs.html">Clubs</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/calendar.js"></script>
+</body>
+</html>
