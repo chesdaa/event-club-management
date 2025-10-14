@@ -12,6 +12,11 @@ function setupAuthForms() {
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
+    
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
+}
 
 function setupRoleConditional() {
     const roleSelect = document.getElementById('role');
@@ -46,11 +51,6 @@ function setupRoleConditional() {
 
     roleSelect.addEventListener('change', update);
     update(); // Run on page load
-}
-    
-    if (registerForm) {
-        registerForm.addEventListener('submit', handleRegister);
-    }
 }
 
 function handleLogin(e) {

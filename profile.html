@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Profile - Campus Events</title>
+  <title>My Profile - CluboraX</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,18 +12,19 @@
   <nav class="navbar">
     <div class="container">
       <div class="nav-brand">
-        <i class="fas fa-graduation-cap"></i>
-        <span>Campus Events</span>
+        <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <i class="fas fa-graduation-cap" style="display:none;"></i>
+        <span>CluboraX</span>
       </div>
       <ul class="nav-menu">
         <li><a href="index.html">Home</a></li>
         <li><a href="events.html">Events</a></li>
         <li><a href="clubs.html">Clubs</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
       </ul>
       <div class="nav-actions">
-        <a href="notifications.html" class="btn btn-outline"><i class="fas fa-bell"></i></a>
+        <a href="profile.html" class="btn btn-outline"><i class="fas fa-user"></i> Profile</a>
+        <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
       </div>
       <div class="mobile-menu-toggle">
         <i class="fas fa-bars"></i>
@@ -31,16 +32,11 @@
     </div>
   </nav>
 
-  <div class="main-content">
-    <header class="top-bar">
+  <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+    <section style="padding: calc(4rem + 60px) 2rem 4rem;">
       <div class="container">
-        <h2>My Profile</h2>
-      </div>
-    </header>
-
-    <div class="dashboard-content container">
       <div class="page-header">
-        <h1>Account Information</h1>
+        <h1>Account & Settings</h1>
         <button class="btn btn-primary" id="saveProfileBtn"><i class="fas fa-save"></i> Save Changes</button>
       </div>
 
@@ -62,20 +58,6 @@
               <label>Email</label>
               <input id="pfEmail" type="email" placeholder="Email" disabled>
             </div>
-            <div class="form-control">
-              <label>Student ID</label>
-              <input id="pfStudentId" type="text" placeholder="Student ID">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-control">
-              <label>Faculty</label>
-              <input id="pfFaculty" type="text" placeholder="Faculty">
-            </div>
-            <div class="form-control">
-              <label>Year</label>
-              <input id="pfYear" type="number" min="1" max="8" placeholder="Year">
-            </div>
           </div>
         </div>
 
@@ -96,8 +78,60 @@
             </div>
           </div>
           <div class="form-control">
-            <label>About Me</label>
-            <textarea id="pfAbout" rows="4" placeholder="Write something about yourself..."></textarea>
+            <label>About</label>
+            <textarea id="pfAbout" rows="4" placeholder="Tell us about yourself or your organization..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student-only -->
+      <div class="card role-student-only">
+        <h3>Student Details</h3>
+        <div class="form-row">
+          <div class="form-control">
+            <label>Student ID</label>
+            <input id="pfStudentId" type="text" placeholder="Student ID">
+          </div>
+          <div class="form-control">
+            <label>Faculty</label>
+            <input id="pfFaculty" type="text" placeholder="Faculty">
+          </div>
+          <div class="form-control">
+            <label>Year</label>
+            <input id="pfYear" type="number" min="1" max="8" placeholder="Year">
+          </div>
+        </div>
+      </div>
+
+      <!-- Organizer-only -->
+      <div class="card role-organizer-only" style="display:none;">
+        <h3>Organization Details</h3>
+        <div class="form-row">
+          <div class="form-control">
+            <label>Organization / Company</label>
+            <input id="pfOrgName" type="text" placeholder="e.g., Tech Club, ABC Company">
+          </div>
+          <div class="form-control">
+            <label>Category</label>
+            <select id="pfOrgCategory">
+              <option value="">Select Category</option>
+              <option value="academic">Academic</option>
+              <option value="sports">Sports</option>
+              <option value="arts">Arts & Culture</option>
+              <option value="tech">Technology</option>
+              <option value="business">Business</option>
+              <option value="social">Social</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-control" style="grid-column: 1 / -1;">
+            <label>Purpose</label>
+            <textarea id="pfOrgPurpose" rows="3" placeholder="Describe your organization's mission and goals"></textarea>
+          </div>
+          <div class="form-control" style="grid-column: 1 / -1;">
+            <label>Website (Optional)</label>
+            <input id="pfOrgWebsite" type="url" placeholder="https://yourorganization.com">
           </div>
         </div>
       </div>
@@ -117,7 +151,45 @@
         <button class="btn btn-outline" id="changePasswordBtn"><i class="fas fa-key"></i> Change Password</button>
       </div>
     </div>
+      </div>
+    </section>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
+            <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+          </div>
+          <p>Your one-stop platform for campus activities and club management.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="help-center.html">Help Center</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect With Us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

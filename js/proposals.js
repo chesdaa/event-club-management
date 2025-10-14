@@ -1,6 +1,13 @@
 // Proposals page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     if (!requireAuth()) return;
+    const user = getCurrentUser();
+    if (!user || user.role !== 'organizer') {
+        // Organizer-only page guard
+        showNotification('Proposals are available for organizers only.', 'error');
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 900);
+        return;
+    }
     
     loadProposals();
     setupProposalForms();

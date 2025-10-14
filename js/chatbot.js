@@ -1,9 +1,10 @@
-// Chatbot functionality
+// Chatbot functionality (role-aware)
 document.addEventListener('DOMContentLoaded', function() {
-    initChatbot();
+    if (typeof initChatbot === 'function') initChatbot();
 });
 
 function initChatbot() {
+    if (window.__chatbotBound) return; // avoid double-binding across pages
     const chatbotToggle = document.getElementById('chatbotToggle');
     const chatbotWindow = document.getElementById('chatbotWindow');
     const chatbotClose = document.getElementById('chatbotClose');
@@ -12,9 +13,13 @@ function initChatbot() {
     const chatbotMessages = document.getElementById('chatbotMessages');
 
     if (!chatbotToggle) return;
+    window.__chatbotBound = true;
+
+    const limited = (typeof isLoggedIn === 'function') ? !isLoggedIn() : true;
 
     // Toggle chatbot window
-    chatbotToggle.addEventListener('click', () => {
+    if (!chatbotToggle.dataset.bound) {
+      chatbotToggle.addEventListener('click', () => {
         chatbotWindow.classList.toggle('show');
         if (chatbotWindow.classList.contains('show')) {
             chatbotInput.focus();
@@ -22,26 +27,39 @@ function initChatbot() {
             if (chatbotMessages.children.length === 0) {
                 addBotMessage('Hi! 👋 I\'m your Campus Events assistant. How can I help you today?');
                 setTimeout(() => {
-                    addBotMessage('You can ask me about:\n• Upcoming events\n• Club information\n• Registration help\n• Event creation');
-                }, 500);
+                    addBotMessage(limited
+                      ? 'You can ask me about:\n• Upcoming events\n• Club information\n• How to register/login\n\nFor personalized help (RSVPs, notifications, proposals), please login.'
+                      : 'You can ask me about:\n• Upcoming events\n• Club information\n• Registration help\n• Event creation and proposals');
+                }, 450);
             }
         }
-    });
+      });
+      chatbotToggle.dataset.bound = '1';
+    }
 
     // Close chatbot
-    chatbotClose.addEventListener('click', () => {
-        chatbotWindow.classList.remove('show');
-    });
+    if (chatbotClose && !chatbotClose.dataset.bound) {
+      chatbotClose.addEventListener('click', () => {
+          chatbotWindow.classList.remove('show');
+      });
+      chatbotClose.dataset.bound = '1';
+    }
 
     // Send message on button click
-    chatbotSend.addEventListener('click', sendMessage);
+    if (chatbotSend && !chatbotSend.dataset.bound) {
+      chatbotSend.addEventListener('click', sendMessage);
+      chatbotSend.dataset.bound = '1';
+    }
 
     // Send message on Enter key
-    chatbotInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
+    if (chatbotInput && !chatbotInput.dataset.bound) {
+      chatbotInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+              sendMessage();
+          }
+      });
+      chatbotInput.dataset.bound = '1';
+    }
 
     function sendMessage() {
         const message = chatbotInput.value.trim();
@@ -53,7 +71,7 @@ function initChatbot() {
 
         // Simulate bot response
         setTimeout(() => {
-            const response = getBotResponse(message);
+            const response = getBotResponse(message, limited);
             addBotMessage(response);
         }, 500);
     }
@@ -84,8 +102,18 @@ function initChatbot() {
         return div.innerHTML.replace(/\n/g, '<br>');
     }
 
-    function getBotResponse(message) {
+    function getBotResponse(message, limited = true) {
         const lowerMessage = message.toLowerCase();
+
+        // Gate advanced topics for guests
+        if (limited) {
+            const restrictedIntents = [
+              'create event','my proposal','proposal','dashboard','rsvp','check-in','notifications','settings','profile','organizer','submit','budget','ai advisor','admin'
+            ];
+            if (restrictedIntents.some(key => lowerMessage.includes(key))) {
+                return 'Please login to use this feature. As a guest, you can ask about upcoming events, clubs, or how to register.';
+            }
+        }
 
         // Event-related queries
         if (lowerMessage.includes('event') || lowerMessage.includes('what') && lowerMessage.includes('happening')) {
@@ -109,7 +137,9 @@ function initChatbot() {
 
         // Create event
         if (lowerMessage.includes('create') && lowerMessage.includes('event')) {
-            return 'To create an event, you need an Organizer account. Once logged in, go to your Dashboard and click "Create Event". Fill in the event details and submit for approval!';
+            return limited
+              ? 'Event creation is available after login. You can register as an Organizer to submit events.'
+              : 'To create an event, go to Dashboard and click "Create Event". Fill details and submit for approval!';
         }
 
         // Calendar

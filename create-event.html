@@ -159,19 +159,51 @@
                     </div>
 
                     <div class="form-section">
-                        <h3>Additional Details</h3>
+                        <h3>Registration Settings</h3>
                         <div class="form-group">
                             <label class="checkbox-label">
-                                <input type="checkbox" name="requiresRegistration" checked>
+                                <input type="checkbox" id="requiresRegistration" name="requiresRegistration" checked onchange="toggleRegistrationSettings()">
                                 <span>Requires Registration</span>
                             </label>
                         </div>
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="generateQR" checked>
-                                <span>Generate QR Code Tickets</span>
-                            </label>
+                        
+                        <div id="registrationSettings" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="requiresApproval" name="requiresApproval">
+                                    <span>Require Organizer Approval Before Joining</span>
+                                </label>
+                                <small class="form-hint">When enabled, participants must wait for your approval before they can join</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="generateQR" checked>
+                                    <span>Generate QR Code Tickets</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-group" style="margin-top: 1.5rem;">
+                                <label style="font-weight: 600; font-size: 1.05rem; margin-bottom: 0.5rem; display: block;">
+                                    <i class="fas fa-clipboard-list"></i> Custom Registration Questions
+                                </label>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                                    Add custom questions to collect information from participants
+                                </p>
+                                
+                                <div id="customQuestions">
+                                    <!-- Questions will be added here -->
+                                </div>
+                                
+                                <button type="button" class="btn btn-outline" onclick="addCustomQuestion()" style="margin-top: 1rem;">
+                                    <i class="fas fa-plus"></i> Add Question
+                                </button>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Additional Details</h3>
                         <div class="form-group">
                             <label for="eventTags">Tags (comma separated)</label>
                             <input type="text" id="eventTags" name="eventTags" placeholder="e.g., workshop, networking, free">

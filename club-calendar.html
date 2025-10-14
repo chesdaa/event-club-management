@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery - CluboraX</title>
+    <title>Club Calendar - CluboraX</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -31,97 +31,80 @@
         </div>
     </nav>
 
-    <!-- Gallery Section -->
-    <section class="gallery-page" style="padding: calc(4rem + 60px) 2rem 4rem;">
+    <!-- Calendar Section -->
+    <section class="calendar-page" style="padding: calc(4rem + 60px) 2rem 4rem;">
         <div class="container">
             <div style="margin-bottom: 1.5rem;">
                 <button class="btn btn-outline" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
             </div>
-            <div class="page-header">
-                <h1>Event Gallery</h1>
-            </div>
-            <!-- Filters -->
-            <div class="filters-bar">
-                <div class="filter-group">
-                    <label>Filter by:</label>
-                    <select id="galleryFilter">
-                        <option value="recent">Recent</option>
-                        <option value="popular">Most Popular</option>
-                    </select>
+            <div class="page-header" style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Club Activities Calendar</h1>
+                <div class="calendar-controls">
+                    <button class="btn btn-outline" onclick="previousMonth()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span id="currentMonth">January 2025</span>
+                    <button class="btn btn-outline" onclick="nextMonth()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="btn btn-primary" onclick="goToToday()">Today</button>
                 </div>
-                <div class="filter-group">
-                    <label>Club:</label>
-                    <select id="clubFilterGallery">
-                        <option value="all">All Clubs</option>
-                        <option value="tech">Tech Club</option>
-                        <option value="music">Music Society</option>
-                        <option value="sports">Sports Club</option>
-                    </select>
+            </div>
+            <!-- View Toggle -->
+            <div class="view-toggle">
+                <button class="toggle-btn active" onclick="switchView('month')">Month</button>
+                <button class="toggle-btn" onclick="switchView('week')">Week</button>
+                <button class="toggle-btn" onclick="switchView('list')">List</button>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="monthView" class="calendar-view">
+                <div class="calendar-grid">
+                    <div class="calendar-header">
+                        <div class="calendar-day-name">Sun</div>
+                        <div class="calendar-day-name">Mon</div>
+                        <div class="calendar-day-name">Tue</div>
+                        <div class="calendar-day-name">Wed</div>
+                        <div class="calendar-day-name">Thu</div>
+                        <div class="calendar-day-name">Fri</div>
+                        <div class="calendar-day-name">Sat</div>
+                    </div>
+                    <div class="calendar-body" id="calendarBody">
+                        <!-- Calendar days will be generated here -->
+                    </div>
                 </div>
             </div>
 
-            <!-- Gallery Albums -->
-            <div class="gallery-albums" id="galleryAlbums">
-                <!-- Albums will be loaded dynamically -->
+            <!-- Week View -->
+            <div id="weekView" class="calendar-view" style="display: none;">
+                <div class="week-grid" id="weekGrid">
+                    <!-- Week view will be generated here -->
+                </div>
+            </div>
+
+            <!-- List View -->
+            <div id="listView" class="calendar-view" style="display: none;">
+                <div class="events-list-view" id="eventsListView">
+                    <!-- Club activities list will be generated here -->
+                </div>
+            </div>
+
+            <!-- Activity Details Sidebar -->
+            <div class="event-details-sidebar" id="eventDetailsSidebar">
+                <div class="sidebar-header">
+                    <h3>Activity Details</h3>
+                    <button class="close-btn" onclick="closeEventDetails()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="eventDetailsContent">
+                    <p class="no-event-selected">Click on a date to view club activities</p>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Photo Viewer Modal -->
-    <div id="photoViewerModal" class="modal">
-        <div class="modal-content modal-fullscreen">
-            <span class="close" onclick="closePhotoViewer()">&times;</span>
-            <button class="nav-btn prev-btn" onclick="previousPhoto()">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="photo-viewer-content">
-                <img id="viewerImage" src="" alt="Event Photo">
-                <div class="photo-info">
-                    <h3 id="photoTitle"></h3>
-                    <p id="photoDescription"></p>
-                </div>
-            </div>
-            <button class="nav-btn next-btn" onclick="nextPhoto()">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Upload Modal -->
-    <div id="uploadModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-upload"></i> Upload Event Photos</h2>
-                <span class="close" onclick="closeUploadModal()">&times;</span>
-            </div>
-            <form id="uploadForm">
-                <div class="form-group">
-                    <label for="uploadEvent">Select Event *</label>
-                    <select id="uploadEvent" required>
-                        <option value="">Choose an event</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Upload Photos *</label>
-                    <div class="file-upload-area">
-                        <i class="fas fa-images"></i>
-                        <p>Drag & drop photos here or click to browse</p>
-                        <input type="file" id="photoFiles" multiple accept="image/*" hidden>
-                        <button type="button" class="btn btn-outline" onclick="document.getElementById('photoFiles').click()">
-                            Choose Files
-                        </button>
-                    </div>
-                    <div id="uploadPreview" class="upload-preview"></div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-outline" onclick="closeUploadModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -161,6 +144,6 @@
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/gallery.js"></script>
+    <script src="js/calendar.js"></script>
 </body>
 </html>

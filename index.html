@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Event & Club Management System</title>
+    <title>CluboraX - Campus Event & Club Management</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="home-page">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Campus Events</span>
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="clubs.html">Clubs</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
             </ul>
             <div class="nav-actions">
                 <a href="login.html" class="btn btn-outline">Login</a>
@@ -37,9 +36,19 @@
         <div class="hero-content">
             <h1>Welcome to Campus Events</h1>
             <p>Discover, Join, and Manage Campus Activities</p>
-            <div class="hero-buttons">
-                <a href="events.html" class="btn btn-primary btn-lg">Browse Events</a>
-                <a href="clubs.html" class="btn btn-outline btn-lg">Explore Clubs</a>
+            <div class="hero-actions" style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <a href="create-event.html" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Create New Event
+                </a>
+                <a href="events.html" class="btn btn-outline">
+                    <i class="fas fa-calendar"></i> Browse Events
+                </a>
+                <a href="clubs.html" class="btn btn-outline">
+                    <i class="fas fa-users"></i> Explore Clubs
+                </a>
+                <a href="proposals.html" class="btn btn-outline">
+                    <i class="fas fa-file-alt"></i> My Proposals
+                </a>
             </div>
         </div>
         <div class="hero-stats">
@@ -87,51 +96,17 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h2>Why Choose Our Platform?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-calendar-check"></i>
-                    <h3>Easy Event Management</h3>
-                    <p>Create and manage events with our intuitive interface</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-qrcode"></i>
-                    <h3>QR Code Check-In</h3>
-                    <p>Seamless attendance tracking with QR codes</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-robot"></i>
-                    <h3>AI Advisor</h3>
-                    <p>Get smart suggestions for proposals and budgets</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-bell"></i>
-                    <h3>Smart Notifications</h3>
-                    <p>Never miss an event with timely reminders</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><i class="fas fa-graduation-cap"></i> Campus Events</h3>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
+                        <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+                    </div>
                     <p>Your one-stop platform for campus activities and club management.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="clubs.html">Clubs</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                    </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Support</h4>

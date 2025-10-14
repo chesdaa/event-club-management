@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery - CluboraX</title>
+    <title>Club Gallery - CluboraX</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -40,7 +40,7 @@
                 </button>
             </div>
             <div class="page-header">
-                <h1>Event Gallery</h1>
+                <h1>Club Gallery</h1>
             </div>
             <!-- Filters -->
             <div class="filters-bar">
@@ -58,6 +58,8 @@
                         <option value="tech">Tech Club</option>
                         <option value="music">Music Society</option>
                         <option value="sports">Sports Club</option>
+                        <option value="arts">Arts Club</option>
+                        <option value="debate">Debate Society</option>
                     </select>
                 </div>
             </div>
@@ -77,7 +79,7 @@
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="photo-viewer-content">
-                <img id="viewerImage" src="" alt="Event Photo">
+                <img id="viewerImage" src="" alt="Club Photo">
                 <div class="photo-info">
                     <h3 id="photoTitle"></h3>
                     <p id="photoDescription"></p>
@@ -93,14 +95,14 @@
     <div id="uploadModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-upload"></i> Upload Event Photos</h2>
+                <h2><i class="fas fa-upload"></i> Upload Club Photos</h2>
                 <span class="close" onclick="closeUploadModal()">&times;</span>
             </div>
             <form id="uploadForm">
                 <div class="form-group">
-                    <label for="uploadEvent">Select Event *</label>
-                    <select id="uploadEvent" required>
-                        <option value="">Choose an event</option>
+                    <label for="uploadClub">Select Club *</label>
+                    <select id="uploadClub" required>
+                        <option value="">Choose a club</option>
                     </select>
                 </div>
                 <div class="form-group">

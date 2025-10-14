@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     loadPopularClubs();
     setupMobileMenu();
     setupNavbarScroll();
+    setupAuthNavbar();
+    bindNavLinks();
+    ensureChatbotWidget();
 });
 
 function loadStats() {
@@ -22,6 +25,156 @@ function loadStats() {
     animateCounter('totalEvents', upcomingEvents.length);
     animateCounter('totalClubs', clubs.length);
     animateCounter('totalParticipants', totalParticipants);
+}
+
+// Ensure nav links always navigate (avoid interference by other handlers/overlays)
+function bindNavLinks() {
+    const links = document.querySelectorAll('.nav-menu a');
+    links.forEach(a => {
+        a.addEventListener('click', (e) => {
+            // If a modal is open, close it first
+            const backdrop = document.getElementById('profileModalBackdrop');
+            if (backdrop && backdrop.style.display !== 'none') {
+                backdrop.style.display = 'none';
+            }
+            const href = a.getAttribute('href');
+            if (!href || href === '#') return;
+            // Force navigation to avoid any preventDefault from other listeners
+            e.preventDefault();
+            window.location.href = href;
+        }, { capture: true });
+    });
+}
+
+// -------- Auth-aware Navbar & Profile Modal --------
+function setupAuthNavbar() {
+    // Requires helpers from js/data.js: isLoggedIn(), getCurrentUser(), logout()
+    const navMenu = document.querySelector('.nav-menu');
+    const navActions = document.querySelector('.nav-actions');
+    if (!navMenu) return;
+
+    // Ensure Dashboard link exists (when logged in)
+    const dashboardLinkExists = !!navMenu.querySelector('a[href="dashboard.html"]');
+    if (isLoggedIn()) {
+        const user = getCurrentUser();
+        // Remove Home for logged-in non-admin users
+        const homeLink = navMenu.querySelector('a[href="index.html"]');
+        if (homeLink && user?.role !== 'admin') {
+            const li = homeLink.closest('li');
+            if (li) li.remove();
+        }
+        if (!dashboardLinkExists) {
+            const li = document.createElement('li');
+            li.innerHTML = '<a href="dashboard.html">Dashboard</a>';
+            navMenu.appendChild(li);
+        }
+        // Clean existing nav actions to avoid duplicates
+        if (navActions) {
+            // Clear all existing items to avoid any duplication across pages
+            navActions.innerHTML = '';
+        }
+        renderProfileAction(navActions);
+        injectProfileModal();
+        bindProfileModal();
+    } else {
+        // If logged out, remove profile action if present
+        const profileBtn = document.getElementById('profileMenuToggle');
+        if (profileBtn && profileBtn.parentElement) profileBtn.parentElement.remove();
+        // Optionally ensure dashboard link not shown for logged out users
+        if (dashboardLinkExists) {
+            const node = navMenu.querySelector('a[href="dashboard.html"]').closest('li');
+            if (node) node.remove();
+        }
+    }
+}
+
+function renderProfileAction(container) {
+    if (!container) return;
+    // Avoid duplicate render
+    if (document.getElementById('profileMenuToggle')) return;
+
+    const user = getCurrentUser();
+    const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.firstName + ' ' + user.lastName)}&background=667eea&color=fff`;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'user-menu';
+    wrapper.style.display = 'flex';
+    wrapper.style.alignItems = 'center';
+    wrapper.style.gap = '0.5rem';
+    wrapper.innerHTML = `
+        <button id="profileMenuToggle" class="btn btn-outline" style="display:flex;align-items:center;gap:8px;">
+            <img src="${avatarUrl}" alt="User" class="user-avatar" style="width:32px;height:32px;border-radius:50%;">
+            <span style="font-weight:600;">${user.firstName}</span>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    `;
+    container?.appendChild(wrapper);
+}
+
+function injectProfileModal() {
+    if (document.getElementById('profileModalBackdrop')) return;
+    const user = getCurrentUser() || { firstName: 'User', lastName: '' };
+    const role = (user.role || 'student');
+    const orgExtra = role === 'organizer' ? '<li><button data-action="proposals" class="modal-link">My Proposals</button></li>' : '';
+
+    const modalHtml = `
+    <div id="profileModalBackdrop" class="profile-modal-backdrop" style="display:none;">
+      <div class="profile-modal">
+        <div class="profile-modal-header">
+          <h3><i class="fas fa-user-circle"></i> Profile</h3>
+          <button class="modal-close" id="profileModalClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="profile-modal-body">
+          <div class="profile-summary">
+            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.firstName + ' ' + (user.lastName||''))}&background=667eea&color=fff" class="profile-avatar"/>
+            <div>
+              <div class="profile-name">${user.firstName} ${user.lastName||''}</div>
+              <div class="profile-role">${role.charAt(0).toUpperCase()+role.slice(1)}</div>
+            </div>
+          </div>
+          <ul class="profile-actions">
+            <li><button data-action="profile" class="modal-link">View Profile</button></li>
+            <li><button data-action="settings" class="modal-link">Settings</button></li>
+            ${orgExtra}
+            <li><button data-action="logout" class="modal-link danger">Logout</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function bindProfileModal() {
+    const toggle = document.getElementById('profileMenuToggle');
+    const backdrop = document.getElementById('profileModalBackdrop');
+    const closeBtn = document.getElementById('profileModalClose');
+    if (!toggle || !backdrop || !closeBtn) return;
+
+    const open = () => { backdrop.style.display = 'flex'; };
+    const close = () => { backdrop.style.display = 'none'; };
+    toggle.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) close(); });
+
+    // Action routing
+    backdrop.querySelectorAll('.modal-link').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const action = e.currentTarget.getAttribute('data-action');
+            switch (action) {
+                case 'profile':
+                    window.location.href = 'profile.html';
+                    break;
+                case 'settings':
+                    window.location.href = 'settings.html';
+                    break;
+                case 'proposals':
+                    window.location.href = 'proposals.html';
+                    break;
+                case 'logout':
+                    logout();
+                    break;
+            }
+        });
+    });
 }
 
 function animateCounter(elementId, target) {

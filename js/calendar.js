@@ -75,11 +75,11 @@ function renderMonthView() {
         if (day.isToday) classes.push('today');
         
         return `
-            <div class="${classes.join(' ')}" onclick="selectDate('${day.dateStr}')">
+            <div class="${classes.join(' ')}" onclick="selectDate('${day.dateStr || ''}')">
                 <div class="day-number">${day.date}</div>
                 <div class="day-events">
                     ${day.events.slice(0, 3).map(event => `
-                        <div class="day-event" title="${event.title}">${event.title}</div>
+                        <div class="day-event" title="${event.title}" onclick="event.stopPropagation(); showEventDetails(${event.id})">${event.title}</div>
                     `).join('')}
                     ${day.events.length > 3 ? `<div class="day-event">+${day.events.length - 3} more</div>` : ''}
                 </div>
@@ -244,7 +244,11 @@ function selectDate(dateStr) {
     
     if (dayEvents.length === 0) {
         content.innerHTML = `
-            <p style="color: var(--text-secondary);">No events on ${formatDate(dateStr)}</p>
+            <div style="text-align: center; padding: 2rem;">
+                <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 0.5rem;">No Events</h4>
+                <p style="color: var(--text-secondary);">No events scheduled for ${formatDate(dateStr)}</p>
+            </div>
         `;
     } else {
         content.innerHTML = `
@@ -263,7 +267,7 @@ function selectDate(dateStr) {
         `;
     }
     
-    sidebar.style.display = 'block';
+    sidebar.classList.add('active');
 }
 
 function showEventDetails(eventId) {
@@ -273,6 +277,6 @@ function showEventDetails(eventId) {
 function closeEventDetails() {
     const sidebar = document.getElementById('eventDetailsSidebar');
     if (sidebar) {
-        sidebar.style.display = 'none';
+        sidebar.classList.remove('active');
     }
 }

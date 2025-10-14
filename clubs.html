@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clubs - Campus Events</title>
+    <title>Clubs - CluboraX</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,15 +12,14 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Campus Events</span>
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="clubs.html" class="active">Clubs</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
             </ul>
             <div class="nav-actions">
                 <a href="login.html" class="btn btn-outline">Login</a>
@@ -37,6 +36,37 @@
         <div class="container">
             <div class="page-header">
                 <h1>Campus Clubs</h1>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <a href="club-calendar.html" class="btn btn-outline">
+                        <i class="fas fa-calendar-alt"></i> Calendar
+                    </a>
+                    <a href="club-gallery.html" class="btn btn-outline">
+                        <i class="fas fa-images"></i> Gallery
+                    </a>
+                    <div class="organizer-only" style="display: none;">
+                        <button class="btn btn-primary" onclick="window.location.href='proposals.html'">
+                            <i class="fas fa-plus-circle"></i> Create Club Proposal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organizer Stats -->
+            <div class="organizer-only" style="display: none; margin-bottom: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 1.5rem; border-radius: 12px; color: white;">
+                        <div style="font-size: 2rem; font-weight: bold;" id="organizerClubCount">0</div>
+                        <div style="opacity: 0.9;">My Clubs</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #f093fb, #f5576c); padding: 1.5rem; border-radius: 12px; color: white;">
+                        <div style="font-size: 2rem; font-weight: bold;" id="organizerTotalMembers">0</div>
+                        <div style="opacity: 0.9;">Total Members</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); padding: 1.5rem; border-radius: 12px; color: white;">
+                        <div style="font-size: 2rem; font-weight: bold;" id="organizerActiveClubs">0</div>
+                        <div style="opacity: 0.9;">Active Clubs</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Filters -->
@@ -86,17 +116,11 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><i class="fas fa-graduation-cap"></i> Campus Events</h3>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
+                        <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+                    </div>
                     <p>Your one-stop platform for campus activities and club management.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="clubs.html">Clubs</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                    </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Support</h4>

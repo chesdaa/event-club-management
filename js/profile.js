@@ -11,35 +11,70 @@ function loadProfile() {
   const user = getCurrentUser();
   if (!user) return;
 
-  document.getElementById('pfFirstName').value = user.firstName || '';
-  document.getElementById('pfLastName').value = user.lastName || '';
-  document.getElementById('pfEmail').value = user.email || '';
-  document.getElementById('pfStudentId').value = user.studentId || '';
-  document.getElementById('pfFaculty').value = user.faculty || '';
-  document.getElementById('pfYear').value = user.year || '';
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+  setVal('pfFirstName', user.firstName);
+  setVal('pfLastName', user.lastName);
+  setVal('pfEmail', user.email);
 
   // Optional fields stored in user.preferences
   const prefs = user.preferences || {};
-  document.getElementById('pfNotifyEmail').value = prefs.notifyEmail || user.email || '';
-  document.getElementById('pfNotifyPref').value = prefs.notifyPref || 'all';
-  document.getElementById('pfAbout').value = prefs.about || '';
+  setVal('pfNotifyEmail', prefs.notifyEmail || user.email || '');
+  const prefSel = document.getElementById('pfNotifyPref');
+  if (prefSel) prefSel.value = prefs.notifyPref || 'all';
+  setVal('pfAbout', prefs.about || '');
+
+  // Role-based sections
+  const studentCard = document.querySelector('.role-student-only');
+  const orgCard = document.querySelector('.role-organizer-only');
+  const isOrganizer = user.role === 'organizer';
+  if (studentCard) studentCard.style.display = isOrganizer ? 'none' : '';
+  if (orgCard) orgCard.style.display = isOrganizer ? '' : 'none';
+
+  if (isOrganizer) {
+    setVal('pfOrgName', user.orgName);
+    setVal('pfOrgCategory', user.orgCategory);
+    setVal('pfOrgPurpose', user.orgPurpose);
+    setVal('pfOrgWebsite', user.orgWebsite);
+  } else {
+    setVal('pfStudentId', user.studentId);
+    setVal('pfFaculty', user.faculty);
+    setVal('pfYear', user.year);
+  }
 }
 
 function saveProfile() {
   const user = getCurrentUser();
   if (!user) return;
 
-  user.firstName = document.getElementById('pfFirstName').value.trim();
-  user.lastName = document.getElementById('pfLastName').value.trim();
-  user.studentId = document.getElementById('pfStudentId').value.trim();
-  user.faculty = document.getElementById('pfFaculty').value.trim();
-  user.year = document.getElementById('pfYear').value.trim();
+  const getVal = (id) => (document.getElementById(id)?.value || '').trim();
+  user.firstName = getVal('pfFirstName');
+  user.lastName = getVal('pfLastName');
 
   user.preferences = {
-    notifyEmail: document.getElementById('pfNotifyEmail').value.trim(),
-    notifyPref: document.getElementById('pfNotifyPref').value,
-    about: document.getElementById('pfAbout').value.trim()
+    notifyEmail: getVal('pfNotifyEmail'),
+    notifyPref: (document.getElementById('pfNotifyPref')?.value || 'all'),
+    about: getVal('pfAbout')
   };
+
+  if (user.role === 'organizer') {
+    user.orgName = getVal('pfOrgName');
+    user.orgCategory = getVal('pfOrgCategory');
+    user.orgPurpose = getVal('pfOrgPurpose');
+    user.orgWebsite = getVal('pfOrgWebsite');
+    // Clear student-specific fields if present
+    user.studentId = '';
+    user.faculty = '';
+    user.year = '';
+  } else {
+    user.studentId = getVal('pfStudentId');
+    user.faculty = getVal('pfFaculty');
+    user.year = getVal('pfYear');
+    // Clear organizer-specific fields if present
+    user.orgName = user.orgName || '';
+    user.orgCategory = user.orgCategory || '';
+    user.orgPurpose = user.orgPurpose || '';
+    user.orgWebsite = user.orgWebsite || '';
+  }
 
   setCurrentUser(user);
   // Persist back to users list

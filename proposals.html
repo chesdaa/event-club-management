@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proposals - Campus Events</title>
+    <title>Proposals - CluboraX</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,65 +12,39 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Campus Events</span>
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="clubs.html">Clubs</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
-            </div>
+            <div class="nav-actions"></div>
             <div class="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <i class="fas fa-graduation-cap"></i>
-            <span>Campus Events</span>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="events.html" class="nav-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Events</span>
-            </a>
-            <a href="clubs.html" class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>Clubs</span>
-            </a>
-            <a href="proposals.html" class="nav-item active">
-                <i class="fas fa-file-alt"></i>
-                <span>Proposals</span>
-            </a>
-        </nav>
-    </aside>
+    
 
     <!-- Main Content -->
-    <div class="main-content">
-        <header class="top-bar">
-            <h2>Proposals</h2>
-            <div class="top-bar-actions">
-                <button class="btn btn-primary" onclick="openProposalModal('event')">
-                    <i class="fas fa-plus"></i> New Event Proposal
-                </button>
-                <button class="btn btn-outline" onclick="openProposalModal('club')">
-                    <i class="fas fa-plus"></i> New Club Proposal
-                </button>
-            </div>
-        </header>
-
-        <div class="dashboard-content">
+    <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+        <section style="padding: calc(4rem + 60px) 2rem 4rem;">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-file-alt"></i> My Proposals</h1>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-primary" onclick="openProposalModal('event')">
+                            <i class="fas fa-plus"></i> New Event Proposal
+                        </button>
+                        <button class="btn btn-outline" onclick="openProposalModal('club')">
+                            <i class="fas fa-plus"></i> New Club Proposal
+                        </button>
+                    </div>
+                </div>
             <!-- Tabs -->
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchTab('all')">All Proposals</button>
@@ -254,8 +228,45 @@
                     <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
-        </div>
+            </div>
+        </section>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
+                        <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+                    </div>
+                    <p>Your one-stop platform for campus activities and club management.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Campus Events</title>
+    <title>Dashboard - CluboraX</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,15 +12,14 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Campus Events</span>
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="clubs.html">Clubs</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
             </ul>
             <div class="nav-actions">
@@ -42,13 +41,32 @@
     <main style="padding-top: 80px; min-height: 100vh; background: #f5f5f5;">
         <div class="container" style="padding: 2rem;">
             <!-- Hero Section -->
-            <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); padding: 3rem 2rem; border-radius: 16px; color: white; margin-bottom: 2rem;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Welcome back, <span id="userNameGreeting">User</span>! 👋</h1>
-                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem;">Here's what's happening with your events and clubs</p>
-                <div class="organizer-only">
-                    <button class="btn" style="background: white; color: var(--primary-color); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; border: none; cursor: pointer;" onclick="window.location.href='events.html'">
-                        <i class="fas fa-plus"></i> Create Event
-                    </button>
+            <div style="position: relative; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0; border-radius: 20px; color: white; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);">
+                <!-- Decorative Elements -->
+                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px);"></div>
+                <div style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(30px);"></div>
+                
+                <div style="position: relative; z-index: 1; padding: 3rem 2.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <h1 style="font-size: 2.5rem; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.2);">Welcome back, <span id="userNameGreeting">User</span>!</h1>
+                            <p style="font-size: 1.15rem; opacity: 0.95; margin: 0.5rem 0 0 0; font-weight: 500;">Manage your events and activities</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
+                        <div class="organizer-only">
+                            <button class="btn" style="background: white; color: var(--primary-color); padding: 0.85rem 1.8rem; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; font-size: 1rem;" onclick="window.location.href='create-event.html'" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'">
+                                <i class="fas fa-plus-circle"></i> Create New Event
+                            </button>
+                        </div>
+                        <button class="btn" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; padding: 0.85rem 1.8rem; border-radius: 12px; font-weight: 600; border: 2px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; font-size: 1rem;" onclick="window.location.href='proposals.html'" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                            <i class="fas fa-file-alt"></i> My Proposals
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -129,17 +147,11 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><i class="fas fa-graduation-cap"></i> Campus Events</h3>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
+                        <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+                    </div>
                     <p>Your one-stop platform for campus activities and club management.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="clubs.html">Clubs</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                    </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Support</h4>
