@@ -5,7 +5,19 @@ let currentView = 'month';
 document.addEventListener('DOMContentLoaded', function() {
     renderCalendar();
     updateMonthDisplay();
+    setupModalListeners();
 });
+
+function setupModalListeners() {
+    const modal = document.getElementById('eventModal');
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeEventModal();
+        }
+    });
+}
 
 function renderCalendar() {
     if (currentView === 'month') {
@@ -79,7 +91,7 @@ function renderMonthView() {
                 <div class="day-number">${day.date}</div>
                 <div class="day-events">
                     ${day.events.slice(0, 3).map(event => `
-                        <div class="day-event" title="${event.title}" onclick="event.stopPropagation(); showEventDetails(${event.id})">${event.title}</div>
+                        <div class="day-event" title="${event.title}" onclick="event.stopPropagation(); showEventModal(${event.id})">${event.title}</div>
                     `).join('')}
                     ${day.events.length > 3 ? `<div class="day-event">+${day.events.length - 3} more</div>` : ''}
                 </div>
@@ -112,7 +124,7 @@ function renderWeekView() {
                 </h4>
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                     ${dayEvents.map(event => `
-                        <div style="background: var(--primary-color); color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer;" onclick="showEventDetails(${event.id})">
+                        <div style="background: var(--primary-color); color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer;" onclick="showEventModal(${event.id})">
                             <strong>${formatTime(event.time)}</strong><br>
                             ${event.title}
                         </div>
@@ -157,7 +169,7 @@ function renderListView() {
             <h3 style="margin-bottom: 1rem; color: var(--primary-color);">${formatDate(date)}</h3>
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 ${groupedEvents[date].map(event => `
-                    <div class="event-list-item" onclick="showEventDetails(${event.id})">
+                    <div class="event-list-item" onclick="showEventModal(${event.id})">
                         <img src="${event.image}" alt="${event.title}" class="event-list-image">
                         <div class="event-list-content">
                             <h4 class="event-list-title">${event.title}</h4>
@@ -255,7 +267,7 @@ function selectDate(dateStr) {
             <h4 style="margin-bottom: 1rem;">${formatDate(dateStr)}</h4>
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 ${dayEvents.map(event => `
-                    <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; cursor: pointer;" onclick="showEventDetails(${event.id})">
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; cursor: pointer;" onclick="showEventModal(${event.id})">
                         <h5 style="margin-bottom: 0.5rem;">${event.title}</h5>
                         <p style="font-size: 0.9rem; color: var(--text-secondary);">
                             <i class="fas fa-clock"></i> ${formatTime(event.time)}<br>
@@ -270,8 +282,93 @@ function selectDate(dateStr) {
     sidebar.classList.add('active');
 }
 
-function showEventDetails(eventId) {
-    window.location.href = `events.html?id=${eventId}`;
+function showEventModal(eventId) {
+    const events = getFromLocalStorage('events') || [];
+    const event = events.find(e => e.id === eventId);
+    
+    if (!event) return;
+    
+    const modal = document.getElementById('eventModal');
+    const content = document.getElementById('eventDetailModalContent');
+    
+    const user = getCurrentUser();
+    const isRegistered = user && user.myEvents && user.myEvents.includes(eventId);
+    const status = getEventStatus(event);
+    const isFull = status === 'soldout';
+    
+    content.innerHTML = `
+        <div class="event-detail">
+            <img src="${event.image}" alt="${event.title}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+            <span class="event-category">${event.category}</span>
+            <h2>${event.title}</h2>
+            <p style="color: var(--text-secondary); margin: 1rem 0;">${event.description}</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                <div>
+                    <strong><i class="fas fa-calendar"></i> Date:</strong>
+                    <p>${formatDate(event.date)}</p>
+                </div>
+                <div>
+                    <strong><i class="fas fa-clock"></i> Time:</strong>
+                    <p>${formatTime(event.time)}${event.endTime ? ' - ' + formatTime(event.endTime) : ''}</p>
+                </div>
+                <div>
+                    <strong><i class="fas fa-map-marker-alt"></i> Venue:</strong>
+                    <p>${event.venue}</p>
+                </div>
+                <div>
+                    <strong><i class="fas fa-users"></i> Organized by:</strong>
+                    <p>${event.club}</p>
+                </div>
+            </div>
+            
+            <div style="background: var(--light-bg); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <strong>Capacity:</strong> ${event.registered}/${event.capacity} registered
+                <div style="background: white; height: 10px; border-radius: 5px; margin-top: 0.5rem; overflow: hidden;">
+                    <div style="background: var(--primary-color); height: 100%; width: ${(event.registered/event.capacity)*100}%;"></div>
+                </div>
+            </div>
+            
+            ${event.tags ? `
+                <div style="margin: 1rem 0;">
+                    <strong>Tags:</strong>
+                    ${event.tags.map(tag => `<span style="display: inline-block; background: var(--light-bg); padding: 0.3rem 0.8rem; border-radius: 20px; margin: 0.2rem; font-size: 0.85rem;">${tag}</span>`).join('')}
+                </div>
+            ` : ''}
+            
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                ${user ? `
+                    ${isRegistered ? `
+                        <button class="btn btn-outline" onclick="cancelRSVPCalendar(${eventId})">
+                            <i class="fas fa-times"></i> Cancel RSVP
+                        </button>
+                        <button class="btn btn-primary" onclick="downloadTicketCalendar(${eventId})">
+                            <i class="fas fa-ticket-alt"></i> Download Ticket
+                        </button>
+                    ` : `
+                        <button class="btn btn-primary" onclick="registerForEventCalendar(${eventId})" ${isFull ? 'disabled' : ''}>
+                            <i class="fas fa-check"></i> ${isFull ? 'Event Full' : 'Register Now'}
+                        </button>
+                    `}
+                ` : `
+                    <button class="btn btn-primary" onclick="window.location.href='login.html'">
+                        <i class="fas fa-sign-in-alt"></i> Login to Register
+                    </button>
+                `}
+            </div>
+        </div>
+    `;
+    
+    modal.classList.add('show');
+    document.body.classList.add('modal-open');
+}
+
+function closeEventModal() {
+    const modal = document.getElementById('eventModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.classList.remove('modal-open');
+    }
 }
 
 function closeEventDetails() {
@@ -279,4 +376,124 @@ function closeEventDetails() {
     if (sidebar) {
         sidebar.classList.remove('active');
     }
+}
+
+function registerForEventCalendar(eventId) {
+    const user = getCurrentUser();
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    const events = getFromLocalStorage('events') || [];
+    const event = events.find(e => e.id === eventId);
+    
+    if (!event) return;
+    
+    if (event.registered >= event.capacity) {
+        alert('Sorry, this event is full!');
+        return;
+    }
+    
+    event.registered++;
+    saveToLocalStorage('events', events);
+    
+    if (!user.myEvents) user.myEvents = [];
+    user.myEvents.push(eventId);
+    setCurrentUser(user);
+    
+    const users = getFromLocalStorage('users') || [];
+    const userIndex = users.findIndex(u => u.id === user.id);
+    if (userIndex !== -1) {
+        users[userIndex].myEvents = user.myEvents;
+        saveToLocalStorage('users', users);
+    }
+    
+    alert('Successfully registered for the event!');
+    closeEventModal();
+    renderCalendar();
+}
+
+function cancelRSVPCalendar(eventId) {
+    if (!confirm('Are you sure you want to cancel your RSVP?')) return;
+    
+    const user = getCurrentUser();
+    const events = getFromLocalStorage('events') || [];
+    const event = events.find(e => e.id === eventId);
+    
+    if (!event) return;
+    
+    event.registered--;
+    saveToLocalStorage('events', events);
+    
+    user.myEvents = user.myEvents.filter(id => id !== eventId);
+    setCurrentUser(user);
+    
+    const users = getFromLocalStorage('users') || [];
+    const userIndex = users.findIndex(u => u.id === user.id);
+    if (userIndex !== -1) {
+        users[userIndex].myEvents = user.myEvents;
+        saveToLocalStorage('users', users);
+    }
+    
+    alert('RSVP cancelled successfully!');
+    closeEventModal();
+    renderCalendar();
+}
+
+function downloadTicketCalendar(eventId) {
+    const events = getFromLocalStorage('events') || [];
+    const event = events.find(e => e.id === eventId);
+    const user = getCurrentUser();
+    
+    if (!event || !user) return;
+    
+    const qrData = `EVENT:${event.id}|USER:${user.id}|NAME:${user.firstName} ${user.lastName}`;
+    
+    const ticketHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Event Ticket - ${event.title}</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                .ticket { max-width: 600px; margin: 0 auto; border: 2px solid #667eea; border-radius: 12px; padding: 2rem; }
+                .header { text-align: center; margin-bottom: 2rem; }
+                .qr-code { text-align: center; margin: 2rem 0; }
+                .details { margin: 1rem 0; }
+                .details div { margin: 0.5rem 0; }
+            </style>
+        </head>
+        <body>
+            <div class="ticket">
+                <div class="header">
+                    <h1>${event.title}</h1>
+                    <p>Event Ticket</p>
+                </div>
+                <div class="details">
+                    <div><strong>Name:</strong> ${user.firstName} ${user.lastName}</div>
+                    <div><strong>Student ID:</strong> ${user.studentId || 'N/A'}</div>
+                    <div><strong>Date:</strong> ${formatDate(event.date)}</div>
+                    <div><strong>Time:</strong> ${formatTime(event.time)}</div>
+                    <div><strong>Venue:</strong> ${event.venue}</div>
+                </div>
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}" alt="QR Code">
+                    <p>Scan this QR code at the event entrance</p>
+                </div>
+            </div>
+        </body>
+        </html>
+    `;
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(ticketHTML);
+    printWindow.document.close();
+}
+
+function getEventStatus(event) {
+    const percentage = (event.registered / event.capacity) * 100;
+    if (percentage >= 100) return 'soldout';
+    if (percentage >= 80) return 'filling';
+    return 'available';
 }

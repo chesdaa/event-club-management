@@ -23,13 +23,17 @@
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="btn btn-outline" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-                <div class="user-menu" style="display: flex; align-items: center; gap: 0.5rem; margin-left: 1rem;">
+                <div class="user-menu" style="display: flex; align-items: center; gap: 1rem;">
+                    <a href="notifications.html" class="notification-icon" style="position: relative; display: flex; align-items: center;">
+                        <i class="fas fa-bell" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+                        <span class="notification-badge" style="position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</span>
+                    </a>
                     <img src="https://ui-avatars.com/api/?name=User&background=667eea&color=fff" alt="User" class="user-avatar" style="width: 35px; height: 35px; border-radius: 50%;">
                     <span id="userName" style="font-weight: 600;">User</span>
                 </div>
+                <button class="btn btn-outline" onclick="logout()" style="margin-left: 1rem;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
             <div class="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
@@ -41,12 +45,12 @@
     <main style="padding-top: 80px; min-height: 100vh; background: #f5f5f5;">
         <div class="container" style="padding: 2rem;">
             <!-- Hero Section -->
-            <div style="position: relative; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0; border-radius: 20px; color: white; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);">
-                <!-- Decorative Elements -->
-                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px);"></div>
-                <div style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(30px);"></div>
+            <div class="dashboard-hero" style="position: relative; padding: 0; border-radius: 20px; color: white; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);">
+                <!-- Background Image with Overlay -->
+                <div class="dashboard-hero-bg"></div>
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%); z-index: 1;"></div>
                 
-                <div style="position: relative; z-index: 1; padding: 3rem 2.5rem;">
+                <div style="position: relative; z-index: 2; padding: 3rem 2.5rem;">
                     <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
                         <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
                             <i class="fas fa-user-circle"></i>
@@ -58,9 +62,12 @@
                     </div>
                     
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-                        <div class="organizer-only">
+                        <div class="organizer-only" style="display: flex; gap: 1rem; flex-wrap: wrap;">
                             <button class="btn" style="background: white; color: var(--primary-color); padding: 0.85rem 1.8rem; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; font-size: 1rem;" onclick="window.location.href='create-event.html'" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'">
                                 <i class="fas fa-plus-circle"></i> Create New Event
+                            </button>
+                            <button class="btn" style="background: white; color: var(--secondary-color); padding: 0.85rem 1.8rem; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; font-size: 1rem;" onclick="window.location.href='create-club.html'" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'">
+                                <i class="fas fa-users"></i> Create New Club
                             </button>
                         </div>
                         <button class="btn" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; padding: 0.85rem 1.8rem; border-radius: 12px; font-weight: 600; border: 2px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; font-size: 1rem;" onclick="window.location.href='proposals.html'" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
@@ -144,35 +151,39 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                        <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
-                        <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section footer-brand">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+                            <img src="img/logo1.png" alt="CluboraX Logo" style="height: 35px; filter: brightness(0) invert(1);" onerror="this.style.display='none';">
+                            <h3 style="margin: 0; font-family: 'Fredoka One', cursive; font-size: 1.3rem;">CluboraX</h3>
+                        </div>
+                        <p style="margin-bottom: 0.8rem; max-width: 320px;">Your one-stop platform for campus activities and club management.</p>
                     </div>
-                    <p>Your one-stop platform for campus activities and club management.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="help-center.html">Help Center</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <div class="footer-section">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="help-center.html">Help Center</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
                 <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
             </div>
         </div>

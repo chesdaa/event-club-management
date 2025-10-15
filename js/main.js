@@ -8,7 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
     setupAuthNavbar();
     bindNavLinks();
     ensureChatbotWidget();
+    setUserRoleClass();
+    setupFAB();
+    setupChatbotMessages();
+    setupCreateDropdown();
 });
+
+// Set body class based on user role for dashboard styling
+function setUserRoleClass() {
+    const user = getCurrentUser();
+    if (user && user.role) {
+        document.body.classList.add(user.role + '-role');
+    }
+}
 
 function loadStats() {
     const events = getFromLocalStorage('events') || [];
@@ -95,6 +107,19 @@ function renderProfileAction(container) {
 
     const user = getCurrentUser();
     const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.firstName + ' ' + user.lastName)}&background=667eea&color=fff`;
+    
+    // Add notification icon
+    const notificationLink = document.createElement('a');
+    notificationLink.href = 'notifications.html';
+    notificationLink.className = 'notification-icon';
+    notificationLink.style.cssText = 'position: relative; display: flex; align-items: center; margin-right: 0.5rem;';
+    notificationLink.innerHTML = `
+        <i class="fas fa-bell" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+        <span class="notification-badge">3</span>
+    `;
+    container?.appendChild(notificationLink);
+    
+    // Add profile button
     const wrapper = document.createElement('div');
     wrapper.className = 'user-menu';
     wrapper.style.display = 'flex';
@@ -196,7 +221,7 @@ function animateCounter(elementId, target) {
 
 function loadFeaturedEvents() {
     const events = getFromLocalStorage('events') || [];
-    const featuredEvents = events.slice(0, 3);
+    const featuredEvents = events.slice(0, 4);
     const container = document.getElementById('featuredEventsGrid');
     
     if (!container) return;
@@ -233,7 +258,7 @@ function createEventCard(event) {
 
 function loadPopularClubs() {
     const clubs = getFromLocalStorage('clubs') || [];
-    const popularClubs = clubs.slice(0, 3);
+    const popularClubs = clubs.slice(0, 4);
     const container = document.getElementById('popularClubsGrid');
     
     if (!container) return;
@@ -242,9 +267,13 @@ function loadPopularClubs() {
 }
 
 function createClubCard(club) {
+    const logoContent = club.image 
+        ? `<img src="${club.image}" alt="${club.name}">`
+        : `<i class="${club.logo}"></i>`;
+    
     return `
         <div class="club-card" onclick="viewClubDetails(${club.id})">
-            <div class="club-logo">${club.logo}</div>
+            <div class="club-logo">${logoContent}</div>
             <h3 class="club-name">${club.name}</h3>
             <p class="club-description">${club.description}</p>
             <div class="club-stats">
@@ -278,6 +307,99 @@ function setupMobileMenu() {
             menu.classList.toggle('show');
         });
     }
+}
+
+// Setup FAB (Floating Action Button) toggle
+function setupFAB() {
+    const fabMain = document.getElementById('fabMain');
+    const fabMenu = document.getElementById('fabMenu');
+    
+    if (!fabMain || !fabMenu) {
+        console.log('FAB elements not found');
+        return;
+    }
+    
+    console.log('Setting up FAB...');
+    
+    // Remove any existing listeners
+    const newFabMain = fabMain.cloneNode(true);
+    fabMain.parentNode.replaceChild(newFabMain, fabMain);
+    
+    newFabMain.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('FAB clicked!');
+        
+        const isVisible = fabMenu.style.display === 'flex';
+        fabMenu.style.display = isVisible ? 'none' : 'flex';
+        newFabMain.classList.toggle('active');
+        
+        console.log('Menu display:', fabMenu.style.display);
+    });
+    
+    // Close FAB menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.fab-container')) {
+            fabMenu.style.display = 'none';
+            const fabBtn = document.getElementById('fabMain');
+            if (fabBtn) fabBtn.classList.remove('active');
+        }
+    });
+    
+    console.log('FAB setup complete');
+}
+
+// Setup chatbot messages based on login status
+function setupChatbotMessages() {
+    const chatMessages = document.getElementById('chatbotMessages');
+    if (!chatMessages) return;
+    
+    const user = getCurrentUser();
+    let welcomeMessage = '';
+    
+    if (user) {
+        welcomeMessage = `Hello ${user.firstName || 'there'}! 👋 I'm your campus assistant. How can I help you today?`;
+    } else {
+        welcomeMessage = `Welcome! 👋 I'm your campus assistant. Please sign in to access personalized features, or ask me anything about our events and clubs!`;
+    }
+    
+    // Add welcome message if chat is empty
+    if (chatMessages.children.length === 0) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chat-message bot';
+        messageDiv.innerHTML = `
+            <div class="message-bubble">
+                <p>${welcomeMessage}</p>
+            </div>
+        `;
+        chatMessages.appendChild(messageDiv);
+    }
+}
+
+// Setup Create Dropdown Button
+function setupCreateDropdown() {
+    const createBtn = document.getElementById('createDropdownBtn');
+    const createMenu = document.getElementById('createDropdownMenu');
+    
+    if (!createBtn || !createMenu) {
+        return;
+    }
+    
+    createBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isVisible = createMenu.style.display === 'block';
+        createMenu.style.display = isVisible ? 'none' : 'block';
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.create-dropdown')) {
+            createMenu.style.display = 'none';
+        }
+    });
 }
 
 function setupNavbarScroll() {

@@ -125,42 +125,67 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                        <img src="img/logo1.png" alt="CluboraX Logo" style="height: 40px; filter: drop-shadow(0 0 5px rgba(118, 75, 162, 0.5));" onerror="this.style.display='none';">
-                        <h3 style="margin: 0; font-family: 'Fredoka One', cursive;">CluboraX</h3>
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section footer-brand">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+                            <img src="img/logo1.png" alt="CluboraX Logo" style="height: 35px; filter: brightness(0) invert(1);" onerror="this.style.display='none';">
+                            <h3 style="margin: 0; font-family: 'Fredoka One', cursive; font-size: 1.3rem;">CluboraX</h3>
+                        </div>
+                        <p style="margin-bottom: 0.8rem; max-width: 320px;">Your one-stop platform for campus activities and club management.</p>
                     </div>
-                    <p>Your one-stop platform for campus activities and club management.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect With Us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <div class="footer-section">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="help-center.html">Help Center</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
                 <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
     <script src="js/gallery.js"></script>
 </body>
 </html>

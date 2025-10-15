@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Club - CluboraX</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="events.html">Events</a></li>
+                <li><a href="clubs.html" class="active">Clubs</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="notifications.html" class="notification-icon" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;">
+                    <i class="fas fa-bell" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+                    <span class="notification-badge" style="position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</span>
+                </a>
+                <a href="profile.html" class="btn btn-outline"><i class="fas fa-user"></i> Profile</a>
+                <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+        <section style="padding: calc(4rem + 60px) 2rem 4rem;">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-users"></i> Create New Club</h1>
+                    <button class="btn btn-outline" onclick="window.location.href='clubs.html'">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+
+                <!-- Create Club Form -->
+                <div class="form-container">
+                <form id="createClubForm" class="event-form">
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-group">
+                            <label for="clubName">Club Name *</label>
+                            <input type="text" id="clubName" name="clubName" placeholder="Enter club name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clubDescription">Description *</label>
+                            <textarea id="clubDescription" name="clubDescription" rows="4" placeholder="Brief description of your club..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="clubMission">Mission Statement *</label>
+                            <textarea id="clubMission" name="clubMission" rows="4" placeholder="What is the mission and purpose of your club?" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clubCategory">Category *</label>
+                                <select id="clubCategory" name="clubCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="academic">Academic</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="arts">Arts & Culture</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="social">Social Service</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="clubFaculty">Faculty/Department *</label>
+                                <select id="clubFaculty" name="clubFaculty" required>
+                                    <option value="">Select Faculty</option>
+                                    <option value="all">All Faculties</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="science">Science</option>
+                                    <option value="arts">Arts</option>
+                                    <option value="business">Business</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Club Logo</h3>
+                        <div class="form-group">
+                            <label for="clubLogo">Club Logo/Icon *</label>
+                            <div class="form-row" style="align-items: center;">
+                                <input type="text" id="clubLogo" name="clubLogo" placeholder="Enter emoji (e.g., 🎨, 💻, ⚽)" required style="flex: 1;">
+                                <div id="logoPreview" style="font-size: 3rem; padding: 1rem; background: var(--light-bg); border-radius: 8px; min-width: 80px; text-align: center;">
+                                    🎯
+                                </div>
+                            </div>
+                            <small class="form-hint">Enter an emoji to represent your club</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Contact Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clubEmail">Contact Email *</label>
+                                <input type="email" id="clubEmail" name="clubEmail" placeholder="club@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clubPhone">Contact Phone</label>
+                                <input type="tel" id="clubPhone" name="clubPhone" placeholder="+1234567890">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="clubWebsite">Website/Social Media</label>
+                            <input type="url" id="clubWebsite" name="clubWebsite" placeholder="https://example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Founding Members</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                            Add at least 5 founding members for your club
+                        </p>
+                        <div id="foundingMembers">
+                            <div class="member-item" style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+                                <input type="text" placeholder="Full Name" class="member-name" required>
+                                <input type="text" placeholder="Student ID" class="member-id" required>
+                                <input type="email" placeholder="Email" class="member-email" required>
+                                <button type="button" class="btn-icon" onclick="removeMember(this)" style="background: #ef4444; color: white; border: none; padding: 0.5rem; border-radius: 6px; cursor: pointer;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline" onclick="addMember()" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> Add Member
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Membership Settings</h3>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="requiresApproval" name="requiresApproval">
+                                <span>Require Approval to Join</span>
+                            </label>
+                            <small class="form-hint">When enabled, members must wait for approval before joining</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="openMembership" name="openMembership" checked>
+                                <span>Open Membership</span>
+                            </label>
+                            <small class="form-hint">Allow anyone to join the club</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Additional Information</h3>
+                        <div class="form-group">
+                            <label for="clubActivities">Planned Activities</label>
+                            <textarea id="clubActivities" name="clubActivities" rows="4" placeholder="Describe the activities and events your club plans to organize..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="clubGoals">Goals & Objectives</label>
+                            <textarea id="clubGoals" name="clubGoals" rows="3" placeholder="What are the main goals of your club?"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="saveDraft()">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i> Create Club
+                        </button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/create-club.js"></script>
+</body>
+</html>

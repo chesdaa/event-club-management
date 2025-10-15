@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSearch();
     setupModal();
     checkUrlParams();
+    setupFilterCreateDropdown();
+    setupRoleBasedUIClubs();
 });
 
 function loadAllClubs() {
@@ -268,5 +270,36 @@ function checkUrlParams() {
     
     if (clubId) {
         showClubModal(parseInt(clubId));
+    }
+}
+
+function setupFilterCreateDropdown() {
+    const createBtn = document.getElementById('filterCreateBtn');
+    const createMenu = document.getElementById('filterCreateMenu');
+    
+    if (createBtn && createMenu) {
+        createBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isVisible = createMenu.style.display === 'block';
+            createMenu.style.display = isVisible ? 'none' : 'block';
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!createBtn.contains(e.target) && !createMenu.contains(e.target)) {
+                createMenu.style.display = 'none';
+            }
+        });
+    }
+}
+
+function setupRoleBasedUIClubs() {
+    const user = getCurrentUser();
+    if (!user || user.role !== 'organizer') {
+        const elms = document.querySelectorAll('.organizer-only');
+        elms.forEach(e => e.style.display = 'none');
+    } else {
+        const elms = document.querySelectorAll('.organizer-only');
+        elms.forEach(e => e.style.display = '');
     }
 }

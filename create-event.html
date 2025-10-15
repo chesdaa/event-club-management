@@ -12,67 +12,41 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <span>Campus Events</span>
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
                 <li><a href="events.html" class="active">Events</a></li>
                 <li><a href="clubs.html">Clubs</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+                <a href="notifications.html" class="notification-icon" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;">
+                    <i class="fas fa-bell" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+                    <span class="notification-badge" style="position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</span>
+                </a>
+                <a href="profile.html" class="btn btn-outline"><i class="fas fa-user"></i> Profile</a>
+                <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
             <div class="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <i class="fas fa-graduation-cap"></i>
-            <span>Campus Events</span>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="events.html" class="nav-item active">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Events</span>
-            </a>
-            <a href="my-events.html" class="nav-item">
-                <i class="fas fa-ticket-alt"></i>
-                <span>My Events</span>
-            </a>
-            <a href="clubs.html" class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>Clubs</span>
-            </a>
-            <a href="proposals.html" class="nav-item">
-                <i class="fas fa-file-alt"></i>
-                <span>Proposals</span>
-            </a>
-        </nav>
-    </aside>
-
     <!-- Main Content -->
-    <div class="main-content">
-        <!-- Top Bar -->
-        <header class="top-bar">
-            <h2>Create New Event</h2>
-            <button class="btn btn-outline" onclick="window.location.href='events.html'">
-                <i class="fas fa-times"></i> Cancel
-            </button>
-        </header>
+    <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+        <section style="padding: calc(4rem + 60px) 2rem 4rem;">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-calendar-plus"></i> Create New Event</h1>
+                    <button class="btn btn-outline" onclick="window.location.href='events.html'">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
 
-        <!-- Create Event Form -->
-        <div class="dashboard-content">
-            <div class="form-container">
+                <!-- Create Event Form -->
+                <div class="form-container">
                 <form id="createEventForm" class="event-form">
                     <div class="form-section">
                         <h3>Basic Information</h3>
@@ -219,12 +193,34 @@
                         </button>
                     </div>
                 </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
     <script src="js/create-event.js"></script>
 </body>
 </html>
