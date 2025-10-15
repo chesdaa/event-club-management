@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Event Advisor - CluboraX</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ai-advisor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="clubs.html">Clubs</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="notifications.html" class="notification-icon" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;">
+                    <i class="fas fa-bell" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+                    <span class="notification-dot" style="display: none;"></span>
+                </a>
+                <a href="profile.html" class="btn btn-outline"><i class="fas fa-user"></i> Profile</a>
+                <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- AI Advisor Layout -->
+    <div class="ai-advisor-container">
+        <!-- Chat History Sidebar -->
+        <aside class="chat-history-sidebar" id="chatHistorySidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-history"></i> Chat History</h3>
+                <button class="btn-icon" onclick="toggleSidebar()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <button class="btn btn-primary new-chat-btn" onclick="createNewChat()">
+                <i class="fas fa-plus"></i> New Chat
+            </button>
+
+            <div class="chat-history-list" id="chatHistoryList">
+                <!-- Chat history items will be loaded here -->
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main-area">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <button class="btn-icon sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="chat-title">
+                    <h2><i class="fas fa-robot"></i> AI Event Advisor</h2>
+                    <p class="chat-subtitle" id="chatSubtitle">Your intelligent event planning assistant</p>
+                </div>
+                <div class="chat-actions">
+                    <button class="btn-icon" onclick="exportChat()" title="Export Chat">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn-icon" onclick="clearCurrentChat()" title="Clear Chat">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2>Welcome to AI Event Advisor</h2>
+                    <p>I'm here to help you plan amazing events! I can assist with:</p>
+                    
+                    <div class="advisor-features">
+                        <div class="feature-card" onclick="selectFeature('budget')">
+                            <div class="feature-icon" style="background: #e3f2fd; color: #2196f3;">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <h4>Budget Planning</h4>
+                            <p>Get detailed budget breakdowns and cost estimates</p>
+                        </div>
+                        
+                        <div class="feature-card" onclick="selectFeature('documents')">
+                            <div class="feature-icon" style="background: #f3e5f5; color: #9c27b0;">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h4>Document Requirements</h4>
+                            <p>Learn what documents you need for your event</p>
+                        </div>
+                        
+                        <div class="feature-card" onclick="selectFeature('venue')">
+                            <div class="feature-icon" style="background: #e8f5e9; color: #4caf50;">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h4>Venue Selection</h4>
+                            <p>Tips for choosing the perfect venue</p>
+                        </div>
+                        
+                        <div class="feature-card" onclick="selectFeature('marketing')">
+                            <div class="feature-icon" style="background: #fff3e0; color: #ff9800;">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <h4>Marketing Strategies</h4>
+                            <p>Effective ways to promote your event</p>
+                        </div>
+                        
+                        <div class="feature-card" onclick="selectFeature('best-practices')">
+                            <div class="feature-icon" style="background: #fce4ec; color: #e91e63;">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>Best Practices</h4>
+                            <p>General event planning guidance and tips</p>
+                        </div>
+                        
+                        <div class="feature-card" onclick="selectFeature('proposal')">
+                            <div class="feature-icon" style="background: #e8eaf6; color: #5e35b1;">
+                                <i class="fas fa-file-signature"></i>
+                            </div>
+                            <h4>Generate Proposal</h4>
+                            <p>Create professional event or club proposals</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages will appear here -->
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="chat-input-area">
+                <div class="input-suggestions" id="inputSuggestions">
+                    <button class="suggestion-chip" onclick="sendSuggestion('Help me plan a budget for a 100-person event')">
+                        💰 Budget for 100-person event
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('What documents do I need for a campus event?')">
+                        📄 Required documents
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('How do I choose the right venue?')">
+                        📍 Venue selection tips
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Give me marketing strategies for my event')">
+                        📢 Marketing strategies
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Help me write a proposal for a tech workshop event')">
+                        📝 Generate proposal
+                    </button>
+                </div>
+                
+                <div class="input-container">
+                    <button class="btn-icon attach-btn" onclick="attachFile()" title="Attach File">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <textarea 
+                        id="chatInput" 
+                        placeholder="Ask me anything about event planning..." 
+                        rows="1"
+                        onkeydown="handleInputKeydown(event)"
+                    ></textarea>
+                    <button class="btn-icon send-btn" onclick="sendMessage()" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/ai-advisor.js"></script>
+</body>
+</html>

@@ -20,6 +20,13 @@ function initChatbot() {
     // Toggle chatbot window
     if (!chatbotToggle.dataset.bound) {
       chatbotToggle.addEventListener('click', () => {
+        // If user is logged in, redirect to AI Advisor page
+        if (!limited) {
+            window.location.href = 'ai-advisor.html';
+            return;
+        }
+        
+        // For non-logged-in users, show chatbot widget
         chatbotWindow.classList.toggle('show');
         if (chatbotWindow.classList.contains('show')) {
             chatbotInput.focus();
@@ -27,9 +34,7 @@ function initChatbot() {
             if (chatbotMessages.children.length === 0) {
                 addBotMessage('Hi! 👋 I\'m your Campus Events assistant. How can I help you today?');
                 setTimeout(() => {
-                    addBotMessage(limited
-                      ? 'You can ask me about:\n• Upcoming events\n• Club information\n• How to register/login\n\nFor personalized help (RSVPs, notifications, proposals), please login.'
-                      : 'You can ask me about:\n• Upcoming events\n• Club information\n• Registration help\n• Event creation and proposals');
+                    addBotMessage('You can ask me about:\n• Upcoming events\n• Club information\n• How to register/login\n\nFor personalized AI assistance with event planning, proposals, and more, please login to access our AI Event Advisor!');
                 }, 450);
             }
         }
