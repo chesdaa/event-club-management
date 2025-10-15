@@ -9,13 +9,40 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  loadDashboardStats();
   loadPendingEventProposals();
   loadPendingProposals();
-  loadAllEvents();
-  loadAllClubs();
-  loadAllUsers();
   createAdminModals();
+  updateTicketNotification();
 });
+
+// Scroll to section smoothly
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  return false;
+}
+
+function loadDashboardStats() {
+  const events = getFromLocalStorage('events') || [];
+  const clubs = getFromLocalStorage('clubs') || [];
+  const users = getFromLocalStorage('users') || [];
+  const tickets = getFromLocalStorage('tickets') || [];
+  const openTickets = tickets.filter(t => t.status === 'open' || t.status === 'in-progress');
+
+  // Update stats
+  const totalEventsEl = document.getElementById('totalEventsCount');
+  const totalClubsEl = document.getElementById('totalClubsCount');
+  const totalUsersEl = document.getElementById('totalUsersCount');
+  const openTicketsEl = document.getElementById('openTicketsCount');
+
+  if (totalEventsEl) totalEventsEl.textContent = events.length;
+  if (totalClubsEl) totalClubsEl.textContent = clubs.length;
+  if (totalUsersEl) totalUsersEl.textContent = users.length;
+  if (openTicketsEl) openTicketsEl.textContent = openTickets.length;
+}
 
 function loadPendingProposals() {
   const container = document.getElementById('pendingProposals');
@@ -670,5 +697,172 @@ function loadSystemSettings() {
   }
   if (settings.registrationDeadline) {
     document.getElementById('registrationDeadline').value = settings.registrationDeadline;
+  }
+}
+
+// ===== TICKET MANAGEMENT =====
+function loadTickets() {
+  const container = document.getElementById('ticketsList');
+  if (!container) return;
+
+  const tickets = getFromLocalStorage('tickets') || [];
+  const filter = document.getElementById('ticketFilter')?.value || 'all';
+  
+  let filtered = tickets;
+  if (filter !== 'all') {
+    filtered = tickets.filter(t => t.status === filter);
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-secondary); padding: 2rem; text-align: center;">No tickets found.</p>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(ticket => `
+    <div class="ticket-card status-${ticket.status}">
+      <div class="ticket-header">
+        <div>
+          <div class="ticket-title">#${ticket.id} - ${ticket.subject}</div>
+          <div class="ticket-meta">
+            <span><i class="fas fa-user"></i> ${ticket.userName}</span>
+            <span><i class="fas fa-envelope"></i> ${ticket.userEmail}</span>
+            <span><i class="fas fa-clock"></i> ${new Date(ticket.createdAt).toLocaleDateString()}</span>
+          </div>
+        </div>
+        <span class="ticket-status ${ticket.status}">${ticket.status.replace('-', ' ')}</span>
+      </div>
+      <div class="ticket-description">${ticket.description}</div>
+      ${ticket.replies && ticket.replies.length > 0 ? `
+        <div class="ticket-replies">
+          <h4 style="margin-bottom: 0.75rem; font-size: 0.9rem;">Replies (${ticket.replies.length})</h4>
+          ${ticket.replies.map(reply => `
+            <div class="ticket-reply">
+              <div class="reply-header">
+                <span class="reply-author">${reply.author}</span>
+                <span class="reply-date">${new Date(reply.date).toLocaleString()}</span>
+              </div>
+              <div class="reply-content">${reply.message}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+      <div class="reply-form" id="replyForm${ticket.id}">
+        <textarea id="replyText${ticket.id}" placeholder="Type your reply..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; min-height: 80px; font-family: inherit; resize: vertical;"></textarea>
+        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+          <button class="btn btn-primary btn-sm" onclick="submitReply(${ticket.id})">
+            <i class="fas fa-paper-plane"></i> Send Reply
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="toggleReplyForm(${ticket.id})">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+      <div class="ticket-actions">
+        <button class="btn btn-primary btn-sm" onclick="toggleReplyForm(${ticket.id})">
+          <i class="fas fa-reply"></i> Reply
+        </button>
+        ${ticket.status === 'open' ? `
+          <button class="btn btn-outline btn-sm" onclick="updateTicketStatus(${ticket.id}, 'in-progress')">
+            <i class="fas fa-hourglass-half"></i> Mark In Progress
+          </button>
+        ` : ''}
+        ${ticket.status === 'in-progress' ? `
+          <button class="btn btn-outline btn-sm" onclick="updateTicketStatus(${ticket.id}, 'resolved')">
+            <i class="fas fa-check-circle"></i> Mark Resolved
+          </button>
+        ` : ''}
+        ${ticket.status === 'resolved' ? `
+          <button class="btn btn-outline btn-sm" onclick="updateTicketStatus(${ticket.id}, 'closed')">
+            <i class="fas fa-lock"></i> Close Ticket
+          </button>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterTickets() {
+  loadTickets();
+}
+
+function toggleReplyForm(ticketId) {
+  const form = document.getElementById(`replyForm${ticketId}`);
+  if (form) {
+    form.classList.toggle('active');
+  }
+}
+
+function submitReply(ticketId) {
+  const textarea = document.getElementById(`replyText${ticketId}`);
+  const message = textarea?.value.trim();
+  
+  if (!message) {
+    alert('Please enter a reply message');
+    return;
+  }
+
+  const tickets = getFromLocalStorage('tickets') || [];
+  const ticket = tickets.find(t => t.id === ticketId);
+  
+  if (!ticket) return;
+
+  if (!ticket.replies) {
+    ticket.replies = [];
+  }
+
+  const user = getCurrentUser();
+  ticket.replies.push({
+    author: user.name || 'Admin',
+    date: new Date().toISOString(),
+    message: message
+  });
+
+  saveToLocalStorage('tickets', tickets);
+  textarea.value = '';
+  toggleReplyForm(ticketId);
+  loadTickets();
+  
+  alert('Reply sent successfully!');
+}
+
+function updateTicketStatus(ticketId, newStatus) {
+  const tickets = getFromLocalStorage('tickets') || [];
+  const ticket = tickets.find(t => t.id === ticketId);
+  
+  if (!ticket) return;
+
+  ticket.status = newStatus;
+  ticket.updatedAt = new Date().toISOString();
+
+  saveToLocalStorage('tickets', tickets);
+  loadTickets();
+  updateTicketNotification();
+  
+  alert(`Ticket status updated to: ${newStatus.replace('-', ' ')}`);
+}
+
+function updateTicketNotification() {
+  const tickets = getFromLocalStorage('tickets') || [];
+  const openTickets = tickets.filter(t => t.status === 'open' || t.status === 'in-progress');
+  const notificationDot = document.getElementById('ticketNotificationDot');
+  const ticketCountBadge = document.getElementById('ticketCount');
+  
+  // Update notification dot
+  if (notificationDot) {
+    if (openTickets.length > 0) {
+      notificationDot.style.display = 'block';
+    } else {
+      notificationDot.style.display = 'none';
+    }
+  }
+  
+  // Update ticket count badge
+  if (ticketCountBadge) {
+    ticketCountBadge.textContent = openTickets.length;
+    if (openTickets.length > 0) {
+      ticketCountBadge.style.display = 'inline-block';
+    } else {
+      ticketCountBadge.style.display = 'none';
+    }
   }
 }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs Management - Admin - CluboraX</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="admin-events.html">Events</a></li>
+                <li><a href="admin-clubs.html" class="active">Clubs</a></li>
+                <li><a href="admin-users.html">Users</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="admin-tickets.html" class="notification-icon" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;" title="Support Tickets">
+                    <i class="fas fa-ticket-alt" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+                    <span class="notification-dot" id="ticketNotificationDot" style="display: none;"></span>
+                </a>
+                <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+        <section style="padding: calc(4rem + 60px) 2rem 4rem;">
+            <div class="container">
+                <div class="page-header" style="margin-bottom: 2rem;">
+                    <h1><i class="fas fa-users"></i> Clubs Management</h1>
+                    <button class="btn btn-primary" onclick="openCreateClubModal()">
+                        <i class="fas fa-plus"></i> Create Club
+                    </button>
+                </div>
+
+                <!-- Pending Club Proposals -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3><i class="fas fa-check-circle"></i> Pending Club Proposals</h3>
+                    <div id="pendingProposals">
+                        <!-- Filled by admin.js -->
+                    </div>
+                </div>
+
+                <!-- All Clubs -->
+                <div class="card">
+                    <h3><i class="fas fa-users"></i> All Clubs</h3>
+                    <div style="margin: 1rem 0;">
+                        <input type="text" id="searchClubs" placeholder="Search clubs..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterClubs()">
+                    </div>
+                    <div id="allClubsList" class="clubs-grid-dash"></div>
+                    <div id="clubsPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!requireAuth()) return;
+            const user = getCurrentUser();
+            if (!user || user.role !== 'admin') {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            loadPendingProposals();
+            loadAllClubs();
+            createAdminModals();
+            updateTicketNotification();
+        });
+    </script>
+</body>
+</html>

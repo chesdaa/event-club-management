@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Tickets - Admin - CluboraX</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body no-sidebar">
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="admin-events.html">Events</a></li>
+                <li><a href="admin-clubs.html">Clubs</a></li>
+                <li><a href="admin-users.html">Users</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="admin-tickets.html" class="notification-icon active" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;" title="Support Tickets">
+                    <i class="fas fa-ticket-alt" style="font-size: 1.3rem; color: var(--primary-color);"></i>
+                    <span class="notification-dot" id="ticketNotificationDot" style="display: none;"></span>
+                </a>
+                <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+        <section style="padding: calc(4rem + 60px) 2rem 4rem;">
+            <div class="container">
+                <div class="page-header" style="margin-bottom: 2rem;">
+                    <h1><i class="fas fa-ticket-alt"></i> Support Tickets <span id="ticketCount" class="badge" style="background: #ef4444; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; margin-left: 0.5rem;">0</span></h1>
+                    <p style="color: var(--text-secondary); margin: 0.5rem 0 0 0;">Review and respond to user support tickets</p>
+                </div>
+
+                <!-- Ticket Filters -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <label style="font-weight: 600;">Filter by Status:</label>
+                        <select id="ticketFilter" onchange="filterTickets()" style="padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; min-width: 200px;">
+                            <option value="all">All Tickets</option>
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tickets List -->
+                <div id="ticketsList" class="tickets-list"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!requireAuth()) return;
+            const user = getCurrentUser();
+            if (!user || user.role !== 'admin') {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            loadTickets();
+            updateTicketNotification();
+        });
+    </script>
+</body>
+</html>

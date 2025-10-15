@@ -25,7 +25,7 @@
       <div class="nav-actions">
         <a href="notifications.html" class="notification-icon" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;">
           <i class="fas fa-bell" style="font-size: 1.3rem; color: var(--text-primary);"></i>
-          <span class="notification-badge" style="position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">3</span>
+          <span class="notification-dot" style="display: none;"></span>
         </a>
         <a href="profile.html" class="btn btn-outline"><i class="fas fa-user"></i> Profile</a>
         <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -54,6 +54,46 @@
       </div>
     </section>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section footer-brand">
+            <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+              <img src="img/logo1.png" alt="CluboraX Logo" style="height: 35px; filter: brightness(0) invert(1);" onerror="this.style.display='none';">
+              <h3 style="margin: 0; font-family: 'Fredoka One', cursive; font-size: 1.3rem;">CluboraX</h3>
+            </div>
+            <p style="margin-bottom: 0.8rem; max-width: 320px;">Your one-stop platform for campus activities and club management.</p>
+          </div>
+          <div class="footer-section">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="help-center.html">Help Center</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Follow Us</h4>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2025 Campus Event Management System. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
   <!-- Chatbot Widget -->
   <div class="chatbot-widget">

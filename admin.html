@@ -3,32 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Campus Events</title>
+    <title>Admin - CluboraX</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dashboard-body no-sidebar">
-    <div class="main-content">
-        <header class="top-bar">
-            <h2>System Administration</h2>
-            <div class="top-bar-actions">
-                <button class="btn btn-outline" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-                <div class="user-menu">
-                    <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff" alt="User" class="user-avatar">
-                    <span>Admin</span>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="img/logo1.png" alt="CluboraX Logo" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <i class="fas fa-graduation-cap" style="display:none;"></i>
+                <span>CluboraX</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="admin.html" class="active">Dashboard</a></li>
+                <li><a href="admin-events.html">Events</a></li>
+                <li><a href="admin-clubs.html">Clubs</a></li>
+                <li><a href="admin-users.html">Users</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="admin-tickets.html" class="notification-icon" style="position: relative; display: flex; align-items: center; margin-right: 0.5rem;" title="Support Tickets">
+                    <i class="fas fa-ticket-alt" style="font-size: 1.3rem; color: var(--text-primary);"></i>
+                    <span class="notification-dot" id="ticketNotificationDot" style="display: none;"></span>
+                </a>
+                <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content" style="min-height: 100vh; background: var(--light-bg);">
+        <section style="padding: calc(4rem + 60px) 2rem 4rem;">
+            <div class="container">
+            <div class="page-header" style="margin-bottom: 2rem;">
+                <h1><i class="fas fa-user-shield"></i> Admin Dashboard</h1>
+                <p style="color: var(--text-secondary); margin: 0.5rem 0 0 0;">Overview and quick actions</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #e3f2fd; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #2196f3; font-size: 1.5rem;">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 2rem; margin: 0; color: var(--text-primary);" id="totalEventsCount">0</h3>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Total Events</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #f3e5f5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9c27b0; font-size: 1.5rem;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 2rem; margin: 0; color: var(--text-primary);" id="totalClubsCount">0</h3>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Total Clubs</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #e8f5e9; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #4caf50; font-size: 1.5rem;">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 2rem; margin: 0; color: var(--text-primary);" id="totalUsersCount">0</h3>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Total Users</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #fff3e0; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ff9800; font-size: 1.5rem;">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 2rem; margin: 0; color: var(--text-primary);" id="openTicketsCount">0</h3>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">Open Tickets</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <div class="dashboard-content">
-            <!-- Admin Actions -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-tools"></i> Quick Actions</h2>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            <!-- Quick Actions -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3><i class="fas fa-tools"></i> Quick Actions</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                     <button class="btn btn-primary" onclick="openCreateEventModal()">
                         <i class="fas fa-plus"></i> Create Event
                     </button>
@@ -44,92 +111,25 @@
                 </div>
             </div>
 
-            <!-- Pending Event Proposals -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-calendar-check"></i> Pending Event Proposals</h2>
-                </div>
+            <!-- Pending Proposals -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3><i class="fas fa-calendar-check"></i> Pending Event Proposals</h3>
                 <div id="pendingEventProposals">
                     <!-- Filled by admin.js -->
                 </div>
             </div>
 
-            <!-- Pending Club Proposals -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-check-circle"></i> Pending Club Proposals</h2>
-                </div>
+            <div class="card">
+                <h3><i class="fas fa-check-circle"></i> Pending Club Proposals</h3>
                 <div id="pendingProposals">
                     <!-- Filled by admin.js -->
                 </div>
             </div>
-
-            <!-- Events Overview -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-calendar-alt"></i> All Events</h2>
-                    <button class="btn btn-outline btn-sm" onclick="toggleSection('allEventsList')">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                </div>
-                <div style="margin-bottom: 1rem;">
-                    <input type="text" id="searchEvents" placeholder="Search events..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterEvents()">
-                </div>
-                <div id="allEventsList" class="events-list"></div>
-                <div id="eventsPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
             </div>
-
-            <!-- Clubs Overview -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-users"></i> All Clubs</h2>
-                    <button class="btn btn-outline btn-sm" onclick="toggleSection('allClubsList')">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                </div>
-                <div style="margin-bottom: 1rem;">
-                    <input type="text" id="searchClubs" placeholder="Search clubs..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterClubs()">
-                </div>
-                <div id="allClubsList" class="clubs-grid-dash"></div>
-                <div id="clubsPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
-            </div>
-
-            <!-- Users Overview -->
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-user-shield"></i> Users Management</h2>
-                    <button class="btn btn-outline btn-sm" onclick="toggleSection('allUsersList')">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                </div>
-                <div style="margin-bottom: 1rem;">
-                    <input type="text" id="searchUsers" placeholder="Search users..." style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px;" onkeyup="filterUsers()">
-                </div>
-                <div id="allUsersList" class="events-list"></div>
-                <div id="usersPagination" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;"></div>
-            </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Chatbot Widget -->
-    <div class="chatbot-widget">
-        <button class="chatbot-toggle" id="chatbotToggle">
-            <i class="fas fa-comments"></i>
-        </button>
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <h3><i class="fas fa-robot"></i> Campus Assistant</h3>
-                <button class="chatbot-close" id="chatbotClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chatbot-messages" id="chatbotMessages"></div>
-            <div class="chatbot-input">
-                <input type="text" id="chatbotInput" placeholder="Type your message...">
-                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
+    
 
     <script src="js/data.js"></script>
     <script src="js/chatbot.js"></script>
